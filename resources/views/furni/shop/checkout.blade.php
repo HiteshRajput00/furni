@@ -321,6 +321,7 @@
                                                     <td>{{ $cart->products->product }} <strong
                                                             class="mx-2">x</strong>
                                                         {{ $cart->quantity }}</td>
+                                                        <?php $data[] = $cart->variations->price * $cart->quantity ?>
                                                     <td>${{ $cart->variations->price * $cart->quantity }}</td>
                                                 </tr>
                                             @endforeach
@@ -346,6 +347,7 @@
                                     </table>
                                     <input type="hidden" name="total" value="{{ session('discount') }}">
                                 @endif
+                                <input type="hidden" name="subtotal" value="{{ array_sum($data) }}">
 
 
 

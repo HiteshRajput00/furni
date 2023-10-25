@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingDetails;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Colour;
 use App\Models\Coupon;
+use Illuminate\Support\Str;
 use App\Models\discount;
 use App\Models\Furniture;
 use App\Models\Size;
@@ -541,7 +544,7 @@ class ProductController extends Controller
                 'new' => $new,
                 'n' => $new,
                 'd' => $data
-                
+
             ]);
         } else {
             session()->forget(['name', 'id', 'userID']);
@@ -583,7 +586,41 @@ class ProductController extends Controller
     }
 
     // place order function
-    public function billingdetails(Request $request){
-        dd($request->all());
+    public function billingdetails(Request $request)
+    {
+        // dd($request->all());
+      $name =  $request->input('fname');
+        if($name !== null){
+        $rec = new BillingDetails();
+        $rec->userID = Auth::user()->id;
+        $rec->fname = $request->fname;
+        $rec->lname = $request->lname;
+        $rec->companyname = $request->c_companyname;
+        $rec->email = $request->email;
+        $rec->number = $request->phone;
+        $rec->street = $request->address;
+        $rec->houseNO = $request->house;
+        $rec->statecountry = $request->statecountry;
+        $rec->zip = $request->zip;
+        $rec->save();
     }
+        $coupon = Coupon::find($request->code);
+        $products = serialize($request->cartsproduct);
+        $order = new Order();
+        $orderNumber = 'ORD' . Str::random(8);
+        $order->orderNUM = $orderNumber;
+      
+        $order->userID = Auth::user()->id;
+        $order->productID = $products;
+        $order->coupon = $coupon->code;
+        $dis = $request->subtotal - $request->total;
+        $order->discount = $dis ;
+        $order->totalamount = $request->total;
+        $order->orderdate = now()->format('Y-m-d H:i:s');
+        // $order->save();
+
+        return view('furni.shop.thankyou');
+        
+    }
+   
 }

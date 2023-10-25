@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\messagemail;
 use App\Models\Cart;
 use App\Models\product;
 use App\Models\Colour;
@@ -14,6 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class usercontroller extends Controller
 {
@@ -81,6 +83,7 @@ class usercontroller extends Controller
     }
     public function contact()
     {
+        
         return view('furni.contact');
     }
     public function blog()
@@ -97,12 +100,22 @@ class usercontroller extends Controller
         return view('furni.user.profile');
     }
 
-    public function form()
+    public function message(Request $request)
     {
-        return view('form');
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+        ]);
+
+        
+        Mail::to('vanshrana3204@gmail.com')->send(new messagemail($data));
+
+        return back()->with('message', 'Your message has been sent to the admin.');
+        
     }
-    public function load(Request $request)
+    public function mail()
     {
-        return response()->json(['html' => "hello hitesh"]);
+        return view('furni.mail.index');
     }
 }

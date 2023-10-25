@@ -63,7 +63,9 @@ Route::get('/furni/register', [usercontroller::class, 'register'])->name('regist
 Route::get('/services', [usercontroller::class, 'services'])->name('services');
 Route::get('/about', [usercontroller::class, 'about'])->name('about');
 Route::get('/contact', [usercontroller::class, 'contact'])->name('contact');
+Route::post('/message', [usercontroller::class, 'message'])->name('message');
 Route::get('/blog', [usercontroller::class, 'blog'])->name('blog');
+Route::get('/mail', [usercontroller::class, 'mail'])->name('mail');
 Route::get('/shop', [usercontroller::class, 'shop'])->name('shop');
 Route::get('/logout', [usercontroller::class, 'logout']);
 Route::get('/product/{id}', [ProductController::class, 'product'])->name('product');
