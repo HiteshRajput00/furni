@@ -1,0 +1,10 @@
+input{
+    border: 1px ;
+    border-color: black;
+
+}
+.colourfeild {
+    border-radius: 50%;
+    border: 1px;
+
+}
