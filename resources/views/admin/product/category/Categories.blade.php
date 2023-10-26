@@ -13,21 +13,22 @@
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
                                 <a class="text-center" href="/home">
-                                    <h4>add material</h4>
+                                    <h4>add furniture type</h4>
                                 </a>
 
-                                <form class="mt-5 mb-5 login-input" method="post" action="/addmaterial">
+                                <form class="mt-5 mb-5 login-input" method="post" action="/addfurniture">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="enter material type"
-                                            name="type">
-                                        @if ($errors->has('type'))
-                                            <div class="text-danger">{{ $errors->first('type') }}</div>
+                                    <input type="file" class="form-control" placeholder="add" name="image"
+                                    required>
+                                  </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="enter furniture type"
+                                            name="furnituretype">
+                                        @if ($errors->has('furnituretype'))
+                                            <div class="text-danger">{{ $errors->first('furnituretype') }}</div>
                                         @endif
                                     </div>
-
-
-
                                     <button class="btn login-form__btn submit w-100" type="submit">add</button>
                                 </form>
                                 <a class="btn btn-primary" href="/index">back</a>

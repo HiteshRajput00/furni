@@ -1,8 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\usercontroller;
+
+use App\Http\Controllers\Admin\AddProductController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\furnicontroller\CartController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\furnicontroller\checkoutcontroller;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\editProductController;
+use App\Http\Controllers\furnicontroller\ProductController;
+use App\Http\Controllers\furnicontroller\usercontroller;
+use App\Http\Controllers\furnicontroller\WishlistController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -19,47 +27,45 @@ Route::get('/', [usercontroller::class, 'index'])->name('index');
 Route::post('/store', [AdminController::class, 'store']);
 Route::post('/log', [AdminController::class, 'log']);
 //  admin routes
-Route::group(['middleware' => 'Admin', 'admin'], function () {
+Route::group(['middleware' => 'Auth', 'admin'], function () {
+  Route::get('/home', [AdminController::class, 'home'])->name('home');
   Route::get('/profile', [AdminController::class, 'profile']);
   Route::get('/users', [AdminController::class, 'user']);
   Route::get('/adminlogout', [AdminController::class, 'adminlogout']);
-  Route::get('/home', [ProductController::class, 'home'])->name('home');
-  Route::get('/add', [ProductController::class, 'add']);
-  Route::post('/savecoupon', [ProductController::class, 'savecoupon']);
-  Route::get('/addcoupon', [ProductController::class, 'addcoupon'])->name('addcoupon');
-  Route::get('/couponlist', [ProductController::class, 'couponlist']);
-  Route::post('/save', [ProductController::class, 'save']);
-  Route::post('/variable', [ProductController::class, 'variable']);
-  Route::get('/list', [ProductController::class, 'list']);
-  Route::get('/delete{id}', [ProductController::class, 'del'])->name('delete');
-  Route::get('/edit{id}', [ProductController::class, 'edit'])->name('edit');
-  Route::post('/update{id}', [ProductController::class, 'update'])->name('update');
-  Route::get('/colour', [ProductController::class, 'colour']);
-  Route::get('/material', [ProductController::class, 'material']);
-  Route::get('/size', [ProductController::class, 'size']);
-  Route::get('/category', [ProductController::class, 'category']);
-  Route::post('/addcolour', [ProductController::class, 'addcolour']);
-  Route::post('/addmaterial', [ProductController::class, 'addmaterial']);
-  Route::post('/addsize', [ProductController::class, 'addsize']);
-  Route::post('/addfurniture', [ProductController::class, 'addfurniture']);
-  Route::post('/colour', [ProductController::class, 'colour']);
-  Route::get('/variation{vID}', [ProductController::class, 'editvariation'])->name('variation');
-  Route::post('/savevar{id}', [ProductController::class, 'savevar'])->name('savevar');
+  
+  Route::get('/add', [AddProductController::class, 'add']);
+  Route::post('/savecoupon', [CouponController::class, 'savecoupon']);
+  Route::get('/addcoupon', [CouponController::class, 'addcoupon'])->name('addcoupon');
+  Route::post('/save', [AddProductController::class, 'save']);
+  // Route::post('/variable', [ProductController::class, 'variable']);
+  Route::get('/list', [AddProductController::class, 'list']);
+  Route::get('/delete{id}', [editProductController::class, 'del'])->name('delete');
+  Route::get('/edit{id}', [editProductController::class, 'edit'])->name('edit');
+  Route::post('/update{id}', [editProductController::class, 'update'])->name('update');
+  Route::get('/colour', [CategoryController::class, 'colour']);
+  Route::get('/material', [CategoryController::class, 'material']);
+  Route::get('/category', [CategoryController::class, 'category']);
+  Route::post('/addcolour', [CategoryController::class, 'addcolour']);
+  Route::post('/addmaterial', [CategoryController::class, 'addmaterial']);
+ 
+  Route::post('/addfurniture', [CategoryController::class, 'addfurniture']);
+ 
+  Route::get('/variation{vID}', [editProductController::class, 'editvariation'])->name('variation');
+  Route::post('/savevar{id}', [editProductController::class, 'savevar'])->name('savevar');
 });
 //user protected route
 Route::group(['middleware' => 'Auth'], function () {
-  Route::get('/userprofile', [usercontroller::class, 'userprofile'])->name('userprofile'); 
-  Route::get('/addcart/{id}', [ProductController::class, 'addcart'])->name('shop.addcart');
-  Route::get('/showcart', [ProductController::class, 'showcart'])->name('showcart');
-  Route::get('/delcart{Cid}', [ProductController::class, 'delcart'])->name('delcart');
-  Route::post('/applycoupon', [ProductController::class, 'applycoupon'])->name('applycoupon');
-  Route::post('/removecoupon', [ProductController::class, 'removecoupon'])->name('removecoupon');
-  Route::post('/addwishlist', [ProductController::class, 'addwishlist'])->name('addwishlist');
-  Route::post('/removewishlist', [ProductController::class, 'removewishlist'])->name('removewishlist');
-  Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
-  Route::post('/billingdetails', [ProductController::class, 'billingdetails'])->name('billingdetails');
+  
+  Route::get('/addcart/{id}', [CartController::class, 'addcart'])->name('shop.addcart');
+  Route::get('/showcart', [CartController::class, 'showcart'])->name('showcart');
+  Route::get('/delcart{Cid}', [CartController::class, 'delcart'])->name('delcart');
+  Route::post('/addwishlist', [WishlistController::class, 'addwishlist'])->name('addwishlist');
+  Route::post('/removewishlist', [WishlistController::class, 'removewishlist'])->name('removewishlist');
+  Route::get('/checkout', [checkoutcontroller::class, 'checkout'])->name('checkout');
+  Route::post('/billingdetails', [CheckoutController::class, 'billingdetails'])->name('billingdetails');
 });
 Route::get('/furni/register', [usercontroller::class, 'register'])->name('register');
+
 Route::get('/services', [usercontroller::class, 'services'])->name('services');
 Route::get('/about', [usercontroller::class, 'about'])->name('about');
 Route::get('/contact', [usercontroller::class, 'contact'])->name('contact');
