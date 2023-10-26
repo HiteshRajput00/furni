@@ -61,7 +61,7 @@ class variation extends Model
         'price',
         'colourID',
         'materialID',
-        'sizeID',
+        'size',
        
       ];
     public function products(){
@@ -78,10 +78,7 @@ class variation extends Model
     {
         return $this->belongsTo(Material::class,'materialID', 'id');
     }
-    public function size()
-    {
-        return $this->belongsTo(Size::class,'sizeID', 'id');
-    }
+    
     public function furniture()
     {
         return $this->belongsTo(Furniture::class,'categoryID', 'id');

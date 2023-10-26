@@ -46,7 +46,7 @@
                                     <p class="mb-0">Full Name</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ $data->name }}</p>
+                                    <p class="text-muted mb-0">{{ Auth::user()->name }}</p>
                                 </div>
                             </div>
                             <hr>
@@ -55,7 +55,7 @@
                                     <p class="mb-0">Email</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ $data->email }}</p>
+                                    <p class="text-muted mb-0">{{ Auth::user()->email }}</p>
                                 </div>
                             </div>
                             <hr>
@@ -64,7 +64,7 @@
                                     <p class="mb-0">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ $data->number }}</p>
+                                    <p class="text-muted mb-0">{{ Auth::user()->number }}</p>
                                 </div>
                             </div>
                             <hr>
@@ -77,4 +77,31 @@
             </div>
         </div>
     </section>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Sr no.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+                <tr>
+
+                    <th scope="row">{{ $loop->iteration }}</th>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->number }}</td>
+                    <td><a href="">edit</a></td>
+                    <td><a href="">delete</a></td>
+
+                </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+    <br>
+    <a class="btn btn-primary" href="/index">back</a>
 @endsection
