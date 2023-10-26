@@ -34,6 +34,7 @@ Route::group(['middleware' => 'Auth', 'admin'], function () {
   Route::get('/adminlogout', [AdminController::class, 'adminlogout']);
   Route::get('/addblog', [Blogcontroller::class, 'addblog'])->name('addblog');
   Route::post('/saveblog', [Blogcontroller::class, 'saveblog'])->name('saveblog');
+  Route::get('/bloglist', [Blogcontroller::class, 'bloglist'])->name('bloglist');
   Route::get('/add', [AddProductController::class, 'add']);
   Route::post('/savecoupon', [CouponController::class, 'savecoupon']);
   Route::get('/addcoupon', [CouponController::class, 'addcoupon'])->name('addcoupon');

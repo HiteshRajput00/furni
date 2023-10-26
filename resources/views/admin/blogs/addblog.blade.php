@@ -102,7 +102,7 @@
         $(document).ready(function() {
             $('#title').on('keyup', function() {
                 let name = $(this).val().toLowerCase();
-                let slug = name.replace(/\s+/g, "-"); // Replace consecutive spaces with a single dash
+                let slug = name.replace(/\s+/g, "-"); 
                 $('#slug').val(slug);
             });
         });
