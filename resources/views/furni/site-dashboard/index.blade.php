@@ -1,57 +1,39 @@
 @extends('furni.structure.main_layout')
 @section('content')
-		<!-- Start Hero Section -->
-			<div class="hero">
-				<div class="container">
-					<div class="row justify-content-between">
-						<div class="col-lg-5">
-							<div class="intro-excerpt">
-								<h1>Modern Interior <span clsas="d-block">Design Studio</span></h1>
-								<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-								<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
-							</div>
-						</div>
-						<div class="col-lg-7">
-							<div class="hero-img-wrap">
-								<img src="{{ url('/asset/images/couch.png') }}" class="img-fluid">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- End Hero Section -->
-		<!-- category navbar-->
-	<div class="product-section">
-		<div class="container">
-			<div class="row">
-			
-		<div class="row">
-			<br>
-			<span>
-			{{-- <a href="#" class="btn btn-primary">{{$cat->furnituretype}}</a></span> --}}
-			<br>
-			@foreach ($cats as $cat)
-			   {{ $products = DB::table('products')->where('categoryID', $cat->id)->join('variations', 'productID', '=', 'products.id')->select('product', 'variations.productID', 'variations.image', 'variations.price')->get() }}
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-			@foreach ($products as $product) @endforeach
-				<br><hr>
-				{{-- {{ route('product', ['id' => $product->productID]) }} --}}
-				<a class="product-item"
-        href="{{ route('explore', ['id' => $cat->id]) }}">
-    <img src="{{ asset('/upload/' . $product->image) }}" class="img-fluid product-thumbnail" height="500px"
-        width="500px">
-    <h3 class="product-title">{{ $product->product }}</h3>
-    <h3 class="product-title">{{ $product->price }}</h3>
-    <span class="icon-cross">
-        <img src="{{ url('/asset/images/cross.svg') }}" class="img-fluid">
-    </span>
-    </a>
+    <!-- category navbar-->
+    @foreach ($cats as $cat)
+    <div class="product-section" id="page-container">
+        <div class="container">
+         
+            <div class="row">
+               
+                    <br>
+                    <span>
+                        <button id="" type="button" class="btn btn-primary">{{ $cat->furnituretype }}</button></span>
+                    <br>
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <br>
+                        <hr>
+                        <a class="product-item" href="{{ route('product', ['id' => $cat->id]) }}">
+                            <img src="{{ asset('/upload/' . $cat->image) }}" class="img-fluid product-thumbnail"
+                                height="500px" width="500px">
+                            {{-- <h3 class="product-title">{{ $cat->furnituretype }}</h3> --}}
+                            {{-- <h3 class="product-title">{{ $product->price }}</h3> --}}
+                            <span class="icon-cross">
+                                <button id="" type="button"><img src="{{ url('/asset/images/cross.svg') }}"
+                                        class="img-fluid"></button>
+                            </span>
+                        </a>
+                        <a> <i class="far fa-bookmark"></i></a>
+                    </div>
+               
+            </div>
+            
+        </div>
     </div>
     @endforeach
-    </div>
-    </div>
-    </div>
-    </div>
+
+
 
     <!-- Start Why Choose Us Section -->
     <div class="why-choose-section">
@@ -209,8 +191,7 @@
 
                         <div id="testimonial-nav">
                             <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
-                            <span class="next" data-controls="next"><span
-                                    class="fa fa-chevron-right"></span></span>
+                            <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
                         </div>
 
                         <div class="testimonial-slider">
@@ -231,8 +212,8 @@
 
                                             <div class="author-info">
                                                 <div class="author-pic">
-                                                    <img src="{{ url('/asset/images/person-1.png') }}"
-                                                        alt="Maria Jones" class="img-fluid">
+                                                    <img src="{{ url('/asset/images/person-1.png') }}" alt="Maria Jones"
+                                                        class="img-fluid">
                                                 </div>
                                                 <h3 class="font-weight-bold">Maria Jones</h3>
                                                 <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
@@ -260,8 +241,8 @@
 
                                             <div class="author-info">
                                                 <div class="author-pic">
-                                                    <img src="{{ url('/asset/images/person-1.png') }}"
-                                                        alt="Maria Jones" class="img-fluid">
+                                                    <img src="{{ url('/asset/images/person-1.png') }}" alt="Maria Jones"
+                                                        class="img-fluid">
                                                 </div>
                                                 <h3 class="font-weight-bold">Maria Jones</h3>
                                                 <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
@@ -289,8 +270,8 @@
 
                                             <div class="author-info">
                                                 <div class="author-pic">
-                                                    <img src="{{ url('/asset/images/person-1.png') }}"
-                                                        alt="Maria Jones" class="img-fluid">
+                                                    <img src="{{ url('/asset/images/person-1.png') }}" alt="Maria Jones"
+                                                        class="img-fluid">
                                                 </div>
                                                 <h3 class="font-weight-bold">Maria Jones</h3>
                                                 <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
@@ -371,5 +352,4 @@
         </div>
     </div>
     <!-- End Blog Section -->
-
-  @endsection
+@endsection

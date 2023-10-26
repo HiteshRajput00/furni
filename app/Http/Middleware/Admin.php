@@ -17,8 +17,8 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-          if(Auth::User()){
-            if(Auth::check()&&  Auth::User()->role === 'admin'){
+          if(Auth::check()){
+            if(Auth::User()->role === 'admin'){
              return $next($request);
         }
     }

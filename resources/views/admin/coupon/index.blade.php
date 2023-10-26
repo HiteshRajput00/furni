@@ -29,17 +29,6 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="material" id="">product type:</label>
-                                        <select class="form-select" aria-label="Default select example" id="ptype"
-                                            name="type">
-                                            <option selected> select type</option>
-                                            <option value="fixed"> fixed</option>
-                                            <option value="discount"> discount</option>
-                                        </select>
-                                    </div>
-
-                                    
-                                    <div class="form-group">
                                         <input type="text" class="form-control" placeholder="enter value" name="value"
                                             required>
                                     </div>
@@ -76,7 +65,7 @@
                                 <th scope="col">Sno.</th>
                                 <th scope="col">coupon</th>
                                 <th scope="col">code</th>
-                                <th class="W-25" scope="col">couponTYPE</th>
+                              
                                 <th>expiredate</th>
                                 <th></th>
                             </tr>
@@ -88,7 +77,7 @@
                                     <td scope="row">{{ $loop->iteration }}</td>
                                     <td> {{ $coupon->name }}</td>
                                     <td>{{ $coupon->code }}</td>
-                                    <td scope="row">{{ $coupon->type }}</td>
+                                  
                                     <td>{{ $coupon->expiredate }}</td>
                                     <td><a class="btn btn-primary" href="{{ route('delete', ['id' => $coupon->id]) }}">delete</a>
                                     </td>

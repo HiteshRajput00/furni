@@ -53,13 +53,8 @@
                                         </select>
                                         <br>
                                         <label for="s">size:</label>
-                                        <select class="form-select" aria-label="Default select example" id="s"
-                                            name="size">
-                                            <option value="{{ $data->sizeID }}" selected>{{ $data->size->size }} </option>
-                                            @foreach ($sizes as $size)
-                                                <option value="{{ $size->id }}">{{ $size->size }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" name="size" class="form-control" id="s" value="{{ $data->size }}" >
+                                             
                                         <br>
 
                                         <br>

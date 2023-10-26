@@ -19,6 +19,10 @@
                                 <form class="mt-5 mb-5 login-input" method="post" action="/addfurniture">
                                     @csrf
                                     <div class="form-group">
+                                    <input type="file" class="form-control" placeholder="add" name="image"
+                                    required>
+                                  </div>
+                                    <div class="form-group">
                                         <input type="text" class="form-control" placeholder="enter furniture type"
                                             name="furnituretype">
                                         @if ($errors->has('furnituretype'))

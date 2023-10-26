@@ -1,26 +1,7 @@
-<!-- /*
-* Bootstrap 5
-* Template Name: Furni
-* Template Author: Untree.co
-* Template URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
-@include('furni.structure.header')
-<!-- Start Hero Section -->
-<div class="hero">
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-lg-5">
-                <div class="intro-excerpt">
-                    <h1>Cart</h1>
-                </div>
-            </div>
-            <div class="col-lg-7">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Hero Section -->
+
+@extends('furni.structure.main_layout')
+@section('content')
+
 <div class="untree_co-section before-footer-section">
     <div class="container">
         <div class="row mb-5">
@@ -154,4 +135,4 @@
     </div>
 </div>
 
-@include('furni.structure.footer')
+@endsection

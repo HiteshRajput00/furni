@@ -1,4 +1,8 @@
-@include('furni.structure.header')
+
+@extends('furni.structure.main_layout')
+@section('content')
+
+
 <div class="product-section">
     <div class="container">
         <div class="row">
@@ -33,6 +37,11 @@
                         </div>
                     </div>
                 </div>
+            </span>
+        </div>
+    </div>
+</div>
 
 
-                @include('furni.structure.footer')
+
+ @endsection

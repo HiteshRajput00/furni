@@ -19,12 +19,7 @@
                                             <input type="text" class="form-control" placeholder="Name" name="product"
                                                 value="{{ $data->product }}" required>
                                         </div>
-                                        {{-- <div class="form-group">
-                                            <input type="text" class="form-control"  placeholder="details" name="details" required>
-                                        </div> --}}
-
-
-                                        <br>
+                                        
                                         <label for="furni">furniture type:</label>
                                         <select class="form-select" aria-label="Default select example" id="furni"
                                             name="category">
@@ -67,10 +62,8 @@
                                                 <label for="col">colour:</label>
                                                 <select class="form-select" aria-label="Default select example"
                                                     id="col" name="colour[]">
-                                                    {{-- @foreach ($colours as $colour) --}}
-                                                    <option value="{{ $variation->colour->id }} " selected>
+                                                     <option value="{{ $variation->colour->id }} " selected>
                                                         {{ $variation->colour->colour }}</option>
-                                                    {{-- @endforeach --}}
                                                     @foreach ($posts as $post)
                                                         <option value="{{ $post->id }}">{{ $post->colour }}
                                                         </option>
@@ -89,15 +82,7 @@
                                                 </select>
                                                 <br>
                                                 <label for="s">size:</label>
-                                                <select class="form-select" aria-label="Default select example"
-                                                    id="s" name="size[]">
-                                                    <option value="{{ $variation->size->id }}" selected>
-                                                        {{ $variation->size->size }} </option>
-                                                    @foreach ($sizes as $size)
-                                                        <option value="{{ $size->id }}">{{ $size->size }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                              <input type="text" name="size[]" class="form-control" id="s" value="{{ $variation->size }}" >
                                                 <br>
 
                                                 <br>
@@ -105,8 +90,6 @@
                                             </div>
                                             <a class="btn btn-primary"
                                                 href={{ route('variation', ['vID' => $variation->id]) }}>edit</a>
-                                            {{-- <a class="btn btn-primary"   href="{{route('variation',['id'=>$id->id])}}">edit</a> --}}
-
                                             <br><br>
                                         @endforeach
                                         <br><br>
@@ -115,8 +98,7 @@
                                         <button class="btn login-form__btn submit w-100" type="submit"
                                             name="up">update</button>
                                     </form>
-                                    {{-- <p class="mt-5 login-form__footer">Have account <a href="/admin/login" class="text-primary">Sign Up </a> now</p> --}}
-                                    {{-- </p> --}}
+                                   
                                 </div>
                             </div>
                         </div>
@@ -183,29 +165,19 @@
                     selectContainer.appendChild(selectElement1);
                 @endforeach
                 selectContainer.appendChild(div2);
+                //third div
                 const div3 = document.createElement('div');
-                div3.setAttribute("class", "form-group")
-                var labelElement = document.createElement("label");
-                labelElement.textContent = "product size:";
-                labelElement.setAttribute("for", "size");
-                labelElement.setAttribute("id", "size");
-                var selectElement2 = document.createElement("select");
-                selectElement2.setAttribute("name", "size[]")
-                selectElement2.setAttribute("class", "form-select")
-                selectElement2.setAttribute("id", "select2")
-                var option = document.createElement("option");
-                option.text = "select size";
-                selectElement2.appendChild(option);
-                @foreach ($sizes as $size)
-                    var option1 = document.createElement("option");
-                    option1.value = "{{ $size->id }}";
-                    option1.text = "{{ $size->size }}";
-                    selectElement2.appendChild(option1);
-                    var selectContainer = document.getElementById("display");
-                    selectContainer.appendChild(labelElement);
-                    selectContainer.appendChild(selectElement2);
-                @endforeach
-                selectContainer.appendChild(div3);
+            div3.setAttribute("class", "form-group")
+            var selectElement2 = document.createElement("input");
+            selectElement2.setAttribute("name", "size[]")
+            selectElement2.setAttribute("class", "form-control")
+            selectElement2.setAttribute("id", "select2")
+            selectElement2.setAttribute("type", "text")
+            selectElement2.setAttribute("placeholder", "size 00x00")
+             var selectContainer = document.getElementById("display");
+             selectContainer.appendChild(selectElement2);
+         
+            selectContainer.appendChild(div3);
                 const div4 = document.createElement('div');
                 div4.setAttribute("class", "form-group")
                 var labelElement = document.createElement("label");

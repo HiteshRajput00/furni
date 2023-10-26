@@ -1,20 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\furnicontroller;
+use App\Http\Controllers\Controller;
 use App\Mail\messagemail;
-use App\Models\Cart;
-use App\Models\product;
-use App\Models\Colour;
-use App\Models\Coupon;
-use App\Models\Variation;
-use App\Models\size;
 use App\Models\Furniture;
-use App\Models\products;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class usercontroller extends Controller
@@ -61,7 +53,7 @@ class usercontroller extends Controller
     public function index()
     {
         $cats = Furniture::all();
-        return view('furni.index', compact('cats'));
+        return view('furni.site-dashboard.index', compact('cats'));
     }
     //logout function
     public function logout()
@@ -73,26 +65,26 @@ class usercontroller extends Controller
     public function shop()
     {
         $cats = furniture::all();
-        return view('furni.shop.shop', compact('cats'));
+        return view('furni.shop.index', compact('cats'));
     }
 
     //faaltu ke function
     public function services()
     {
-        return view('furni.services');
+        return view('furni.site-pages.services');
     }
     public function contact()
     {
         
-        return view('furni.contact');
+        return view('furni.site-pages.contact');
     }
     public function blog()
     {
-        return view('furni.blog');
+        return view('furni.site-pages.blog');
     }
     public function about()
     {
-        return view('furni.about');
+        return view('furni.site-pages.about');
     }
     //user profile function
     public function userprofile()
