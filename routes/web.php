@@ -20,14 +20,14 @@ Route::post('/store', [AdminController::class, 'store']);
 Route::post('/log', [AdminController::class, 'log']);
 //  admin routes
 Route::group(['middleware' => 'Admin', 'admin'], function () {
+  Route::get('/home', [AdminController::class, 'home'])->name('home');
   Route::get('/profile', [AdminController::class, 'profile']);
   Route::get('/users', [AdminController::class, 'user']);
   Route::get('/adminlogout', [AdminController::class, 'adminlogout']);
-  Route::get('/home', [ProductController::class, 'home'])->name('home');
+  
   Route::get('/add', [ProductController::class, 'add']);
   Route::post('/savecoupon', [ProductController::class, 'savecoupon']);
   Route::get('/addcoupon', [ProductController::class, 'addcoupon'])->name('addcoupon');
-  Route::get('/couponlist', [ProductController::class, 'couponlist']);
   Route::post('/save', [ProductController::class, 'save']);
   Route::post('/variable', [ProductController::class, 'variable']);
   Route::get('/list', [ProductController::class, 'list']);

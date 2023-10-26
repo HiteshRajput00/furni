@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Admin;
+use App\Models\products;
 use App\Models\webuser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
+    public function home()
+    {
+        $data = products::count();
+        $userCount = DB::table('users')->where('role', 'user')->count();
+        //dd($data);
+        return view('admin.Dashboard.index', compact('data', 'userCount'));
+    }
    
     public function index(){
        

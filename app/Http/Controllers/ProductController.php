@@ -24,13 +24,7 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     //home function
-    public function home()
-    {
-        $data = Products::count();
-        $userCount = DB::table('users')->where('role', 'user')->count();
-        //dd($data);
-        return view('admin.index', compact('data', 'userCount'));
-    }
+    
     //add product
     public function add()
     {
@@ -220,7 +214,8 @@ class ProductController extends Controller
     //add coupon 
     public function addcoupon()
     {
-        return view('admin.coupon.index');
+        $coupons = Coupon::all();
+        return view('admin.coupon.index', compact('coupons'));
     }
     public function savecoupon(Request $req)
     {
@@ -238,13 +233,9 @@ class ProductController extends Controller
         $data->status = $req->status;
         $data->expiredate = $req->expiredate;
         $data->save();
-        return "done";
+        return redirect('/addcoupon');
     }
-    public function couponlist()
-    {
-        $coupons = Coupon::all();
-        return view('admin.coupon.list', compact('coupons'));
-    }
+   
     //colour function
     public function colour()
     {
