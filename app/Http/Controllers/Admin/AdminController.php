@@ -58,9 +58,10 @@ class AdminController extends Controller
     }
   
     public function profile(){
-        $user=Auth::User();
-        $data=User::find( $user->id);
-        return view('admin.profile',compact('data'));
+       
+        $users = User::where('role','user')->get();
+        
+        return view('admin.profile.index',compact('users'));
     }
   
         public function adminlogout(){
@@ -68,9 +69,7 @@ class AdminController extends Controller
             return redirect('/');
         }
 
-        public function user(){
-          return view('admin.users');
-        }
+        
 
 
 }

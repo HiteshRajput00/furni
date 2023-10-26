@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\AddProductController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Blogcontroller;
 use App\Http\Controllers\furnicontroller\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\furnicontroller\checkoutcontroller;
@@ -30,9 +31,9 @@ Route::post('/log', [AdminController::class, 'log']);
 Route::group(['middleware' => 'Auth', 'admin'], function () {
   Route::get('/home', [AdminController::class, 'home'])->name('home');
   Route::get('/profile', [AdminController::class, 'profile']);
-  Route::get('/users', [AdminController::class, 'user']);
   Route::get('/adminlogout', [AdminController::class, 'adminlogout']);
-  
+  Route::get('/addblog', [Blogcontroller::class, 'addblog'])->name('addblog');
+  Route::post('/saveblog', [Blogcontroller::class, 'saveblog'])->name('saveblog');
   Route::get('/add', [AddProductController::class, 'add']);
   Route::post('/savecoupon', [CouponController::class, 'savecoupon']);
   Route::get('/addcoupon', [CouponController::class, 'addcoupon'])->name('addcoupon');

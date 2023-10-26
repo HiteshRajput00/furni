@@ -156,6 +156,16 @@
                                 <li><a href="/category"> Add Category</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-note menu-icon"></i><span class="nav-text"> Blogs</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a href="/addblog">Add Blog</a></li>
+                                <li><a href="/material"> Blog List</a></li>
+                             
+                            </ul>
+                        </li>
                         <li class="mega-menu mega-menu-sm">
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                                 <i class="bi bi-person"></i><span class="nav-text">Coupon</span>
