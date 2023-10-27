@@ -48,4 +48,32 @@ class Blogcontroller extends Controller
         $blog->delete();
         return redirect('bloglist');
     }
+
+    public function editblog($id){
+        $blog = Blog::find($id);
+        return view('admin.blogs.editblog', compact('blog'));
+
+    }
+
+    public function updateblog(Request $request, $id){
+        $blog = Blog::find($id);
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $filename = $request->title.rand(0,100).'.'.$file->extension();
+            $file->move(public_path().'/blog_images/', $filename);
+            $image = $filename;
+        }
+        $blog->update([
+            'title '=>$request->title,
+            'slug' =>$request->slug,
+            'sub_title'=>$request->subtitle,
+            'short_description' => $request->short_description,
+            'description' => $request->description,
+            'name' => $request->Wname,
+            'image' => $image,
+
+        ]);
+        return redirect('bloglist');
+
+    }
 }

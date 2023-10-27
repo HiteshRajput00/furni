@@ -14,7 +14,7 @@
                     <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
                         <br>
                         <hr>
-                        <a class="product-item" href="{{ route('product', ['id' => $cat->id]) }}">
+                        <a class="product-item" href="{{ route('explore', ['id' => $cat->id]) }}">
                             <img src="{{ asset('/upload/' . $cat->image) }}" class="img-fluid product-thumbnail"
                                 height="500px" width="500px">
                             {{-- <h3 class="product-title">{{ $cat->furnituretype }}</h3> --}}

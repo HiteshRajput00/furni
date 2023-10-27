@@ -22,7 +22,7 @@
                                                     <h5 class="product-title"><a>{{ $blog->title ?? '' }}</a></h5>
                                                 </div>
                                                 <div class="card-inner text-center">
-                                                    <a href="{{ url('admin-dashboard/blogs/add/' . $blog->slug) }}"
+                                                    <a href="{{ url('/editblog/' . $blog->id) }}"
                                                         class="btn btn-primary">Edit</a>
                                                     <a href="{{ url('/blogdelete/' . $blog->id) }}"
                                                         class="btn btn-danger remove">Delete</a>

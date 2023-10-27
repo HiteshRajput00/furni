@@ -240,14 +240,14 @@
                                         <select class="form-select" aria-label="Default select example" id="input"
                                             name="code">
                                             <option value="" selected> select coupon</option>
-                                            @foreach ($coupon as $c)
+                                            @foreach ($coupons as $c)
                                                 <option value="{{ $c->id }}"> {{ $c->name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div id="btndiv" class="input-group-append">
-                                        <a id="submitButton" class="btn btn-black">Apply</a>
+                                        <a id="submitButton"  class="btn btn-black">Apply</a>
                                         
                                     </div>
                                     <div id="btndiv" class="input-group-append">
@@ -414,6 +414,8 @@
                     $('#remove').hide();
             });
         });
+
+     
 
     </script>
 @endsection

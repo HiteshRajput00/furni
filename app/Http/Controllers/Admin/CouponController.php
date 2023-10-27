@@ -20,14 +20,11 @@ class CouponController extends Controller
         $data = new Coupon();
         $data->name = $req->couponname;
         $data->code = $req->couponcode;
-        $data->type = $req->type;
-        if ($req->type === "fixed") {
-            $data->value = $req->value;
-        } else {
-            $value = $req->value;
-            $data->value = $value;
-        }
-        $data->status = $req->status;
+      
+        $data->value = $req->value;
+       
+            
+        $data->status = 1;
         $data->expiredate = $req->expiredate;
         $data->save();
         return redirect('/addcoupon');

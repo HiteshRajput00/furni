@@ -51,6 +51,8 @@ Route::group(['middleware' => 'Auth', 'admin'], function () {
   Route::post('/saveblog', [Blogcontroller::class, 'saveblog'])->name('saveblog');
   Route::get('/bloglist', [Blogcontroller::class, 'bloglist'])->name('bloglist');
   Route::get('/blogdelete/{id}', [Blogcontroller::class, 'blogdelete'])->name('blogdelete');
+  Route::get('/editblog/{id}', [Blogcontroller::class, 'editblog'])->name('editblog');
+  Route::post('/updateblog/{id}', [Blogcontroller::class, 'updateblog'])->name('updateblog');
   // product routes
   Route::get('/add', [AddProductController::class, 'add']);
   Route::post('/save', [AddProductController::class, 'save']);
@@ -86,6 +88,10 @@ Route::group(['middleware' => 'Auth'], function () {
   // checkout routes
   Route::get('/checkout', [checkoutcontroller::class, 'checkout'])->name('checkout');
   Route::post('/billingdetails', [CheckoutController::class, 'billingdetails'])->name('billingdetails');
+
+  //apply remove  coupon
+  Route::post('/applycoupon',[CouponController::class,'applycoupon'])->name('applycoupon');
+  Route::post('/removecoupon',[CouponController::class,'removecoupon'])->name('removecoupon');
 });
 
 

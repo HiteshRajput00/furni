@@ -27,8 +27,14 @@ class checkoutcontroller extends Controller
             $total = array_sum($price);
         }
         $coupon = Coupon::all();
+        foreach($coupon as $c){
+            if($c->expiredate<now()){
+                $c->update(['status'=>0]);
+            }
+        }
+        $coupons = Coupon::where('status','1')->get();
         $discount = Coupon::all()->pluck('value','id');
-        return view('furni.checkout.index', compact('coupon', 'carts', 'total','discount','address'));
+        return view('furni.checkout.index', compact('coupons', 'carts', 'total','discount','address'));
     }
 
     // place order function
