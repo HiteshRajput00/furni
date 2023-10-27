@@ -124,8 +124,14 @@
                         {{-- @endif --}}
                         <div class="row">
                             <div class="col-md-12">
+                                @if($carts->isEmpty())
                                 <button class="btn btn-black btn-lg py-3 btn-block"
+                                    onclick="window.location='{{ route('shop') }}'">Proceed To Checkout</button>
+                                    @else
+                                    <button class="btn btn-black btn-lg py-3 btn-block"
                                     onclick="window.location='{{ route('checkout') }}'">Proceed To Checkout</button>
+                               
+                                    @endif
                             </div>
                         </div>
                     </div>

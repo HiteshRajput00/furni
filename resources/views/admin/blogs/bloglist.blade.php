@@ -24,7 +24,7 @@
                                                 <div class="card-inner text-center">
                                                     <a href="{{ url('admin-dashboard/blogs/add/' . $blog->slug) }}"
                                                         class="btn btn-primary">Edit</a>
-                                                    <a link="{{ url('admin-dashboard/blogs/delete/' . $blog->id) }}"
+                                                    <a href="{{ url('/blogdelete/' . $blog->id) }}"
                                                         class="btn btn-danger remove">Delete</a>
                                                 </div>
                                             </div>

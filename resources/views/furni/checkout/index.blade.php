@@ -9,7 +9,25 @@
                     </div>
                 </div>
             </div>
+           
             <form method="post" action="/billingdetails">
+                @if($address->isEmpty())
+                @else
+                @foreach ($address as $addr )
+                <div class="purchase_wreap" style="border: 2px solid black">
+                <div class="purchase_hd" >
+                    <input type="radio" id="test2" name="radio-group" value="{{ $addr->id }}" />
+                    <label for="test2">
+                        <div>
+                            <h6 style="display: inline">{{ $addr->companyname }}</h6>
+                            <p>{{ $addr->street }},houseNO.  {{ $addr->houseNO }}</p>
+                        </div>
+                        
+                    </label>
+                </div>
+                </div>
+                @endforeach
+                @endif
                 @csrf
                 <div class="row">
                     <div class="col-md-6 mb-5 mb-md-0">
@@ -229,9 +247,12 @@
                                         </select>
                                     </div>
                                     <div id="btndiv" class="input-group-append">
-                                        <a id="submitButton" class="btn btn-black">Apply
-                                        </a>
+                                        <a id="submitButton" class="btn btn-black">Apply</a>
+                                        
                                     </div>
+                                    <div id="btndiv" class="input-group-append">
+                                        <a id="remove" style="display: none" class="btn">x </a>
+                                     </div>
 
                                 </div>
                             </div>
@@ -257,6 +278,8 @@
                                                     <?php $data[] = $cart->variations->price * $cart->quantity; ?>
                                                     <td>${{ $cart->variations->price * $cart->quantity }}</td>
                                                 </tr>
+                                                <input type="hidden" id="product" name="cartsproduct[]"
+                                                value="{{ $cart->productID }}">
                                             @endforeach
                                             <tr>
                                                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong>
@@ -280,8 +303,10 @@
                                     </table>
 
 
-                                    <input type="hidden" id="inputtotal" name="subtotal"
+                                    <input type="hidden" id="subtotal" name="subtotal"
                                         value="{{ array_sum($data) }}">
+                                        <input type="hidden" id="inputtotal" name="total"
+                                        value="{{ $total }}">
 
 
 
@@ -351,26 +376,44 @@
         $(document).ready(function() {
             const totalprice = document.getElementById('total');
             var productPrice = totalprice.textContent;
-            $('select[name="code"]').on('change', function() {
-                var coupon = $(this).val();
-                if(coupon ===''){
+            $('#submitButton').on('click', function() {
+                var coupon = $("#input option:selected").val();
+                // var coupon = $(this).val();
+                if (coupon === '') {
                     $('#after').text("");
-                $('#discount').text('');
-                $('#final').text(productPrice);
-                $('#inputtotal').val(productPrice);
-            }
-
-                else{
-                var offer = <?php echo json_encode($discount); ?>[coupon];
-                var dis = offer / 100 * productPrice;
-                const discountedPrice = productPrice - dis;
-                $('#after').text("after discount");
-                $('#discount').text(discountedPrice);
-                $('#final').text(discountedPrice);
-                $('#inputtotal').val(discountedPrice);
-            }
+                    $('#discount').text('');
+                    $('#final').text(productPrice);
+                    $('#inputtotal').val(productPrice);
+                } else {
+                    var offer = <?php echo json_encode($discount); ?>[coupon];
+                    var dis = offer / 100 * productPrice;
+                    const discountedPrice = productPrice - dis;
+                    $('#after').text("after discount");
+                    $('#discount').text(discountedPrice);
+                    $('#final').text(discountedPrice);
+                    $('#inputtotal').val(discountedPrice);
+                    document.getElementById("remove").style.display='block';
+                    
+                     $('#submitButton').hide();
+                }
 
             });
         });
+
+        $(document).ready(function() {
+            const totalprice = document.getElementById('total');
+            var productPrice = totalprice.textContent;
+            $('#remove').on('click', function() {
+                var coupon = $("#input option:selected").val();
+                coupon.selectedIndex = 0;
+                $('#after').text("");
+                    $('#discount').text('');
+                    $('#final').text(productPrice);
+                    $('#inputtotal').val(productPrice);
+                    document.getElementById("submitButton").style.display='block';
+                    $('#remove').hide();
+            });
+        });
+
     </script>
 @endsection

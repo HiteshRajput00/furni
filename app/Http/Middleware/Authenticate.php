@@ -30,9 +30,26 @@ class Authenticate extends Middleware
 
 
 
-    protected function redirectTo(Request $request): ?string
-    {
-        return $request->expectsJson() ? null : route('login');
+public function handle($request, Closure $next, ...$guard)
+{
+    
+
+
+    // Check if the user is authenticated using the specified guard
+    if (Auth::guard($guard)->check()) {
+        // User is authenticated, continue with the request
+        return $next($request);
     }
+
+    // User is not authenticated for the specified guard
+    if ($guard === 'admin') {
+        return redirect()->route('admin.login'); // Redirect to admin login
+    } elseif ($guard === 'user') {
+        return redirect()->route('user.login'); // Redirect to user login
+    }
+
+    // Handle other cases as needed (e.g., redirect to a default login page)
+    return redirect()->route('login');
+}
 
 }

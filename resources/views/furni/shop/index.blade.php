@@ -19,7 +19,7 @@
                             <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
                                 <br>
                                 <hr>
-                                {{ $id = $product->id }}
+                                {{-- {{ $id = $product->id }} --}}
                                 {{-- {{$url=url(route( 'product',['id'=>$product->id])) }} --}}
                                 <a class="product-item" href="{{ route('product', ['id' => $product->id]) }}">
                                     <img src="{{ asset('/upload/' . $product->image) }}" class="img-fluid product-thumbnail"

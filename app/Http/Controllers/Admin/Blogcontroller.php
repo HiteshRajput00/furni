@@ -13,13 +13,13 @@ class Blogcontroller extends Controller
 
     public function saveblog(Request $request){
         // dd($request->all());
-        // $request->validate([
-        //     'title' => 'required',
+        $request->validate([
+            'title' => 'required',
          
-        //     'subtitle' => 'required',
-        //     'image' => 'required',
-        //     'category' => 'required'
-        // ]);
+            'subtitle' => 'required',
+            'image' => 'required',
+            
+        ]);
         $blog = new Blog;
         $blog->title = $request->title;
         $blog->slug = $request->slug;
@@ -41,5 +41,11 @@ class Blogcontroller extends Controller
     public function bloglist(){
         $blogs = Blog::all();
         return view('admin.blogs.bloglist', compact('blogs'));
+    }
+
+    public function blogdelete($id){
+        $blog = Blog::find($id);
+        $blog->delete();
+        return redirect('bloglist');
     }
 }

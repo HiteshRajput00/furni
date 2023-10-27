@@ -40,10 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        // 'admin' => [
-        //     'driver' => 'session',
-        //     'provider' => 'admins',
-        // ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -76,10 +76,10 @@ return [
 
         ],
 
-        // 'admins' => [
-        //     'driver' => 'custom',
-        //     'model' => App\Models\User::class,
-        // ],
+        'admins' => [
+            'driver' => 'custom',
+            'model' => App\Models\User::class,
+        ],
     ],
 
     /*
@@ -108,12 +108,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        // 'admin' => [
-        //     'provider' => 'admins',
-        //     'table' => 'password_reset_tokens',
-        //     'expire' => 60,
-        //     'throttle' => 60,
-        // ],
+        'admin' => [
+            'provider' => 'admins',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*
