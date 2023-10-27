@@ -45,7 +45,8 @@
                             <input type="text" class="form-control mr-sm-2" name="search" placeholder="search">
                         </div>
                         <div class="col">
-                            <input type="submit" value="search" class="btn btn-outline-warning btn-rounded btn-sm my-0">
+                            <p><button class="btn btn-white-outline">search</button></p>
+                               
                         </div>
                      </form>
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -60,7 +61,7 @@
 						
 						@if (Auth::guest())
 						@else
-							<li><a class="btn" href="/logout">logout</a></li>
+							<li><a class="btn btn-white-outline" href="/logout">logout</a></li>
                          @endif
 						
                     </ul>
@@ -139,9 +140,9 @@
                     <p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus
                         malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.
                         Pellentesque habitant</p>
-
+                        
                     <ul class="list-unstyled custom-social">
-                        <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+                        <li><a href="#"><span style="color: rgb(247, 239, 239)" class="fa fa-brands fa-facebook-f"></span></a></li>
                         <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
                         <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
                         <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>

@@ -1,37 +1,41 @@
 @extends('furni.structure.main_layout')
 @section('content')
     <!-- category navbar-->
-    @foreach ($cats as $cat)
+
     <div class="product-section" id="page-container">
         <div class="container">
-         
+
             <div class="row">
+                <br>
+
+                @foreach ($cats as $cat)
                
-                    <br>
-                    <span>
-                        <button id="" type="button" class="btn btn-primary">{{ $cat->furnituretype }}</button></span>
-                    <br>
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <br>
-                        <hr>
+                    <div class="col-15 col-md-4 col-lg-4 mb-8 mb-md-0">
+                        <br><br>
+                        <span> <button id="" type="button"
+                                class="btn btn-primary">{{ $cat->furnituretype }}</button></span>
+                       
+                        <br><br>
                         <a class="product-item" href="{{ route('explore', ['id' => $cat->id]) }}">
                             <img src="{{ asset('/upload/' . $cat->image) }}" class="img-fluid product-thumbnail"
-                                height="500px" width="500px">
-                            {{-- <h3 class="product-title">{{ $cat->furnituretype }}</h3> --}}
-                            {{-- <h3 class="product-title">{{ $product->price }}</h3> --}}
+                                >
+
                             <span class="icon-cross">
-                                <button id="" type="button"><img src="{{ url('/asset/images/cross.svg') }}"
-                                        class="img-fluid"></button>
+                                <button id="" type="button"><img
+                                        src="{{ url('/asset/images/cross.svg') }}"class="img-fluid"></button>
                             </span>
                         </a>
                         <a> <i class="far fa-bookmark"></i></a>
+                        <br><br>
+                        <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
+                            vulputate velit imperdiet dolor tempor tristique.</p>
                     </div>
-               
+                @endforeach
             </div>
-            
+
         </div>
     </div>
-    @endforeach
+
 
 
 
@@ -306,20 +310,21 @@
 
             <div class="row">
                 @foreach ($blogs as $blog)
-                <div class="col-12 col-sm-6 col-md-4 mb-5">
-                    <div class="post-entry">
-                        <a href="#" class="post-thumbnail">  <img class="card-img-top"
-                            src="{{ asset('blog_images/' . $blog->image) }}" alt=""></a>
-                        <div class="post-content-entry">
-                            <h3><a href="#">{{ $blog->title }}</a></h3>
-                            <div class="meta">
-                                <span>by <a href="#">{{ $blog->name }}</a></span> <span>on <a href="#">{{ $blog->created_at->format('Y-m-d') }}
+                    <div class="col-12 col-sm-6 col-md-4 mb-5">
+                        <div class="post-entry">
+                            <a href="#" class="post-thumbnail"> <img class="card-img-top"
+                                    src="{{ asset('blog_images/' . $blog->image) }}" alt=""></a>
+                            <div class="post-content-entry">
+                                <h3><a href="#">{{ $blog->title }}</a></h3>
+                                <div class="meta">
+                                    <span>by <a href="#">{{ $blog->name }}</a></span> <span>on <a
+                                            href="#">{{ $blog->created_at->format('Y-m-d') }}
                                         </a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-             @endforeach
+                @endforeach
 
 
             </div>
