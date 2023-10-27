@@ -74,23 +74,23 @@
                     {{-- @csrf --}}
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="text-black h4" id="code">Coupon</label>
-                            <p>Enter your coupon code if you have one.</p>
+                            {{-- <label class="text-black h4" id="code">Coupon</label>
+                            <p>Enter your coupon code if you have one.</p> --}}
                         </div>
                         <div class="col-md-8 mb-3 mb-md-0">
                             {{-- <input type="text" id="input" name="code" class="form-control py-3" id="coupon"
                                 placeholder="Coupon Code"> --}}
-                            <select class="form-select" aria-label="Default select example" id="input"
+                            {{-- <select class="form-select" aria-label="Default select example" id="input"
                                 name="code">
-                                <option value="" selected> select coupon</option>
+                                {{-- <option value="" selected> select coupon</option>
                                 @foreach ($coupon as $c)
                                     <option value="{{ $c->id }}"> {{ $c->name }}
                                     </option>
-                                @endforeach
-                            </select>
+                                @endforeach --}}
+                            {{-- </select> --}} 
                         </div>
                         <div class="col-md-4">
-                            <button type="submit" id="submitButton" class="btn btn-black">Apply Coupon</button>
+                            {{-- <button type="submit" id="submitButton" class="btn btn-black">Apply Coupon</button> --}}
                         </div>
                     </div>
             </div>
@@ -124,8 +124,14 @@
                         {{-- @endif --}}
                         <div class="row">
                             <div class="col-md-12">
+                                @if($carts->isEmpty())
                                 <button class="btn btn-black btn-lg py-3 btn-block"
+                                    onclick="window.location='{{ route('shop') }}'">Proceed To Checkout</button>
+                                    @else
+                                    <button class="btn btn-black btn-lg py-3 btn-block"
                                     onclick="window.location='{{ route('checkout') }}'">Proceed To Checkout</button>
+                               
+                                    @endif
                             </div>
                         </div>
                     </div>

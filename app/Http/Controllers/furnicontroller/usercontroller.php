@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\furnicontroller;
 use App\Http\Controllers\Controller;
 use App\Mail\messagemail;
+use App\Models\Blog;
 use App\Models\Furniture;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -52,8 +53,9 @@ class usercontroller extends Controller
     //index 
     public function index()
     {
+        $blogs = Blog::latest()->take(5)->get();
         $cats = Furniture::all();
-        return view('furni.site-dashboard.index', compact('cats'));
+        return view('furni.site-dashboard.index', compact('cats','blogs'));
     }
     //logout function
     public function logout()
@@ -80,7 +82,8 @@ class usercontroller extends Controller
     }
     public function blog()
     {
-        return view('furni.site-pages.blog');
+        $blogs = Blog::all();
+        return view('furni.site-pages.blog', compact('blogs'));
     }
     public function about()
     {

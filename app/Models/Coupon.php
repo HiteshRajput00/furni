@@ -9,4 +9,9 @@ class Coupon extends Model
 {
     use HasFactory;
     protected $dates = ['expiredate'];
+    protected $fillable = [
+        'status',
+     
+       
+      ];
 }

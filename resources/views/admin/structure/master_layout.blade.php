@@ -162,7 +162,7 @@
                             </a>
                             <ul aria-expanded="false">
                                 <li><a href="/addblog">Add Blog</a></li>
-                                <li><a href="/material"> Blog List</a></li>
+                                <li><a href="/bloglist"> Blog List</a></li>
                              
                             </ul>
                         </li>

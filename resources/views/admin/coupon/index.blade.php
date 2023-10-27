@@ -37,15 +37,7 @@
                                         <input type="date" class="form-control" name="expiredate" required>
                                     </div>
                                    
-                                    <div class="form-group">
-                                        <label for="material" id="">product type:</label>
-                                        <select class="form-select" aria-label="Default select example" id="ptype"
-                                            name="status">
-                                            <option selected> select status</option>
-                                            <option value="1">auto expire</option>
-                                            <option value="2"> by admin</option>
-                                        </select>
-                                    </div>
+                               
                                     <br>
 
                                     <button class="btn login-form__btn submit w-100" type="submit"

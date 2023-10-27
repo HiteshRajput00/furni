@@ -17,6 +17,7 @@ class checkoutcontroller extends Controller
     {
         // $user = auth::user()->id;
         $carts = Cart::where('userID', Auth::user()->id)->get();
+        $address = BillingDetails::where('userID',Auth::user()->id)->get();
         if ($carts->isEmpty()) {
             $total = "0";
         } else {
@@ -26,8 +27,14 @@ class checkoutcontroller extends Controller
             $total = array_sum($price);
         }
         $coupon = Coupon::all();
+        foreach($coupon as $c){
+            if($c->expiredate<now()){
+                $c->update(['status'=>0]);
+            }
+        }
+        $coupons = Coupon::where('status','1')->get();
         $discount = Coupon::all()->pluck('value','id');
-        return view('furni.checkout.index', compact('coupon', 'carts', 'total','discount'));
+        return view('furni.checkout.index', compact('coupons', 'carts', 'total','discount','address'));
     }
 
     // place order function
@@ -50,7 +57,7 @@ class checkoutcontroller extends Controller
         $rec->save();
     }
         $coupon = Coupon::find($request->code);
-        $products = serialize($request->cartsproduct);
+        $products = implode(",",$request->cartsproduct );
         $order = new Order();
         $orderNumber = 'ORD' . str::random(8);
         $order->orderNUM = $orderNumber;
@@ -58,11 +65,18 @@ class checkoutcontroller extends Controller
         $order->userID = Auth::user()->id;
         $order->productID = $products;
         $order->coupon = $coupon->code;
+        $order->billing_detailsID = $rec->id;
         $dis = $request->subtotal - $request->total;
         $order->discount = $dis ;
         $order->totalamount = $request->total;
         $order->orderdate = now()->format('Y-m-d H:i:s');
-        // $order->save();
+        $order->save();
+
+        $cart = Cart::where('userID',Auth::user()->id)->get();
+        foreach($cart as $c){
+            $c->delete();
+        }
+
 
         return view('furni.checkout.thankyou');
         

@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Colour;
 use App\Models\Furniture;
-use App\Models\Type;
 use App\Models\Material;
 use App\Models\Products;
-use App\Models\Status;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 
@@ -15,13 +13,13 @@ class AddProductController extends Controller
 {
     public function add()
     {
-        $statuss = Status::all();
-        $types = Type::all();
+       
+      
         $colours = Colour::all();
         $materials = Material::all();
      
         $furnitures = Furniture::all();
-        return view('admin.product.add', compact('colours', 'types', 'furnitures', 'materials', 'statuss'));
+        return view('admin.product.add', compact('colours', 'furnitures', 'materials'));
     }
     //add function save
     public function save(Request $request)

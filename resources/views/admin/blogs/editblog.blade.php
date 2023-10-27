@@ -7,14 +7,14 @@
                     <div class="card login-form mb-0">
                         <div class="card-body pt-5">
                             <a class="text-center" href="/home">
-                                <h2>add Blog</h2>
+                                <h2>change Blog</h2>
                             </a>
                             <br><br>
                             <div>
                                 <h2> </h2>
                                 <br><br>
                             </div>
-                            <form action="/saveblog" method="post"
+                            <form action="{{ url('/updateblog/'.$blog->id) }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
                                
@@ -79,17 +79,15 @@
                                             <label class="form-label" for="title">Writer Name</label>
                                             <div class="form-control-wrap">
                                                 <input type="text" class="form-control" name="Wname" id="title"
-                                                    placeholder="Name " value="{{ $blog->writer ?? '' }}">
+                                                    placeholder="Name " value="{{ $blog->name ?? '' }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group" id="save">
-                                            <button type="submit" class="btn btn-primary"> Save </button>
+                                            <button type="submit" class="btn btn-primary"> update</button>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </form>
                         </div>
@@ -98,27 +96,4 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#title').on('keyup', function() {
-                let name = $(this).val().toLowerCase();
-                let slug = name.replace(/\s+/g, "-"); 
-                $('#slug').val(slug);
-            });
-        });
-        </script>
-        <script>
-            const editorIds = ['#short-description', '#description'];
-
-                editorIds.forEach(id => {
-                    ClassicEditor
-                        .create(document.querySelector(id))
-                        .then(editor => {
-                            console.log(editor);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                });
-        </script>
-@endsection
+    @endsection

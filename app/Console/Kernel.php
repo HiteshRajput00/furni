@@ -25,10 +25,5 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 
-    protected function schedule(Schedule $schedule)
-    {
-        $schedule->call(function () {
-            Coupon::where('expiredate', '<', now())->delete();
-        })->daily();
-    }
+    
 }

@@ -33,7 +33,7 @@
 				
 				<div class="collapse navbar-collapse" id="navbarsFurni">
 					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
+						<li class="nav-item ">
 							<a class="nav-link" href="/">Home</a>
 						</li>
 						<li><a class="nav-link" href="/shop">Shop</a></li>
@@ -42,15 +42,14 @@
 					</ul>
                     <form action="/search" class="row g-1">
                         <div class="col-auto">
-                            <input type="text" class="form-control" name="search" placeholder="search">
+                            <input type="text" class="form-control mr-sm-2" name="search" placeholder="search">
                         </div>
                         <div class="col">
-                            <input type="submit" value="search" class="btn">
+                            <input type="submit" value="search" class="btn btn-outline-warning btn-rounded btn-sm my-0">
                         </div>
                      </form>
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						{{-- <li><a class="nav-link" href="/furni/login"><img src="{{url('/asset/images/user.svg')}}"> --}}
-						@if (Auth::user())
+							@if (Auth::user())
 						 <li><a class="nav-link" href="/userprofile"><img src="{{ url('/asset/images/user.svg') }}">   {{ Auth::user()->name }}</a></li>
 						
 						  <li><a class="nav-link" href="/showcart"><img src="{{ url('/asset/images/cart.svg') }}"></a></li>
@@ -78,7 +77,7 @@
         <div class="row justify-content-between">
             <div class="col-lg-5">
                 <div class="intro-excerpt">
-                    <h1>Blog</h1>
+                    
                     <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
                         vulputate velit imperdiet dolor tempor tristique.</p>
                     <p><a href="/shop" class="btn btn-secondary me-2">Shop Now</a><a href="#"
@@ -86,9 +85,9 @@
                 </div>
             </div>
             <div class="col-lg-7">
-                <div class="hero-img-wrap">
+                {{-- <div class="hero-img-wrap">
                     <img src="{{ url('/asset/images/couch.png') }}" class="img-fluid">
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -153,10 +152,10 @@
                     <div class="row links-wrap">
                         <div class="col-6 col-sm-6 col-md-3">
                             <ul class="list-unstyled">
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact us</a></li>
+                                <li><a href="/about">About us</a></li>
+                                <li><a href="/services">Services</a></li>
+                                <li><a href="/blog">Blog</a></li>
+                                <li><a href="/contact">Contact us</a></li>
                             </ul>
                         </div>
 
@@ -177,13 +176,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-6 col-sm-6 col-md-3">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Nordic Chair</a></li>
-                                <li><a href="#">Kruzo Aero</a></li>
-                                <li><a href="#">Ergonomic Chair</a></li>
-                            </ul>
-                        </div>
+                       
                     </div>
                 </div>
 

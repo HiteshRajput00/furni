@@ -44,9 +44,10 @@
                                                 id="ptype" name="type">
 
                                                 <option selected> select type</option>
-                                                @foreach ($types as $type)
-                                                    <option value="{{ $type->id }}"> {{ $type->type }}</option>
-                                                @endforeach
+                                              
+                                                    <option value="1"> simple</option>
+                                                    <option value="2"> variable</option>
+                                               
                                             </select>
                                         </div>
                                         <!--simple div start-->

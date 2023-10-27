@@ -69,7 +69,22 @@ class AdminController extends Controller
             return redirect('/');
         }
 
+        // public function log(Request $request){
+           
+        //     $credentials = $request->only('email', 'password');
         
+        //     if (Auth::guard('web')->attempt($credentials)) {
+                
+        //         return redirect('/');
+        //     } elseif (Auth::guard('admin')->attempt($credentials)) {
+               
+        //         return redirect('/home');
+        //     } else {
+               
+        //         return back()->withErrors(['email' => 'Invalid credentials']);
+        //     }
+        // }
+       
 
 
 }
