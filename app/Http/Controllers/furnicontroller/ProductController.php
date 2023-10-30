@@ -20,20 +20,18 @@ class ProductController extends Controller
     {
         // $products = Products::where('categoryID',$id)->get();
         $products = DB::table('products')
-            ->where('categoryID', $id)
-            ->join('variations', 'productID', '=', 'products.id')
-            ->select('products.id', 'product', 'variations.image', 'variations.price')
-            ->get();
+            ->where('categoryID', $id)  ->paginate(10);
+            
+          
         return view('furni.explorcontent.display', compact('products'));
     }
     //product details function
     public function product($id)
     {
         $products = products::find($id);
-        $wishlist = Wishlist::where('productID', $id)
-            ->where('userID', Auth::user()->id)->get();
-        $var = variation::where('productID', $id)->get();
-        return view('furni.explorcontent.product', compact('products', 'wishlist', 'var'))->render();
+        $var = Variation::where('productID',$id)->get();
+      
+        return view('furni.explorcontent.product', compact('products',  'var'))->render();
     }
     //search function
     public function search(Request $request)
@@ -48,7 +46,7 @@ class ProductController extends Controller
             ->join('products', 'categoryID', '=', 'furniture.id')
             ->select('products.id', 'product')
             ->join('variations', 'productID', '=', 'products.id')
-            ->select('product', 'products.id', 'variations.image', 'variations.price')
+            ->select('product', 'products.id', 'variations.image', 'variations.price','variations.stock')
             ->get();
         return view('furni.search.search', compact('result', 'products'));
     }

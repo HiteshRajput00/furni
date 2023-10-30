@@ -22,7 +22,7 @@
                             @if ($carts->isEmpty())
                             @else
                                 @foreach ($carts as $cart)
-                                    <tr>
+                                    <tr id="{{ $cart->id }}">
                                         <td class="product-thumbnail">
                                             <img src="{{ url('/upload/' . $cart->variations->image) }}"alt="Image"
                                                 class="img-fluid">
@@ -37,19 +37,24 @@
                                             <div class="input-group mb-3 d-flex align-items-center quantity-container"
                                                 style="max-width: 120px;">
                                                 <div class="input-group-prepend">
+                                                    <span class="minus"><button class="deletebtn"
+                                                        data-id="{{ $cart->id }}">-</button></span>
                                                     {{-- <button class="btn btn-outline-black decrease" type="button">&minus;</button> --}}
                                                 </div>
-                                                <input type="text" class="form-control text-center quantity-amount"
+                                                <input type="text" name="value" id="qty" class="form-control text-center quantity-amount"
                                                     value="{{ $cart->quantity }}" placeholder=""
                                                     aria-label="Example text with button addon"
                                                     aria-describedby="button-addon1">
                                                 <div class="input-group-append">
+                                                    <span  class="plus"><button class="updatebtn" data-id="{{ $cart->id }}">+</button></span>
                                                     {{-- <button class="btn btn-outline-black increase" type="button">&plus;</button> --}}
                                                 </div>
                                             </div>
                                         </td>
                                         {{-- {{ $p[] = $cart->variations->price * $cart->quantity }} --}}
-                                        <td>{{ $cart->variations->price * $cart->quantity }}</td>
+                                        <td> {{ $cart->variations->price * $cart->quantity }}
+                                          
+                                        </td>
                                         <td><a href="{{ route('delcart', ['Cid' => $cart->id]) }}"
                                                 class="btn btn-black btn-sm">X</a></td>
                                     </tr>
@@ -140,5 +145,72 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // add qty function
+    $(document).ready(function() {
 
+        $('.updatebtn').click(function(e) {
+            e.preventDefault();
+            // const cartproduct =  document.getElementById('cart_content');
+            var productId = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('changecart') }}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    id: productId,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    
+                    $('#qty').value = response.data;
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error:', xhr, status, error);
+                }
+            });
+        });
+    });
+
+    // delete qty function
+    $(document).ready(function() {
+
+        $('.deletebtn').click(function(e) {
+           
+            e.preventDefault();
+            var productId = $(this).data('id');
+            const cartproduct =  document.getElementById(productId);
+           
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('deletecart') }}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    id: productId,
+
+
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.msg1) {
+                        cartproduct.remove();
+                      
+                        
+                    } else {
+                        $('#qty').value = response.qty;
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error:', xhr, status, error);
+                }
+            });
+        });
+    });
+</script>
 @endsection

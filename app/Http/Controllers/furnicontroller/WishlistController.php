@@ -16,47 +16,47 @@ class WishlistController extends Controller
          // dd($request->all());
          $status = $request->input('status');
          $productId = $request->input('productid');
-         $wishlist = wishlist::where('productID', $productId)->get();
+         $wishlist = wishlist::where('variationID', $productId)->get();
          if ($wishlist->isEmpty()) {
-             $wishlist = wishlist::where('productID', $productId)->get();
-             $var = Variation::where('productID', $productId)->get();
-             foreach ($var as $v) {
+            //  $wishlist = wishlist::where('productID', $productId)->get();
+             $var = Variation::find( $productId);
+            
                  $data = new Wishlist();
                  $data->userID = auth::user()->id;
-                 $data->productID = $v->productID;
-                 $data->variationID = $v->id;
+                 $data->productID = $var->productID;
+                 $data->variationID = $var->id;
                  $data->save();
                  $img = url('/asset/images/filllove.png');
                  $id = "remove";
                  return response()->json(['img' => $img, 'btn' => $id]);
-             }
+          
          } else {
-             $data =  Wishlist::where('productID', $productId);
+             $data =  Wishlist::where('variationID', $productId);
              $data->delete();
              $img = url('/asset/images/love.png');
              $id = "add";
              return response()->json(['img' => $img, 'btn' => $id]);
          }
-         return redirect('/product');
+        
      }
      //remove from wishlist
      public function removewishlist(Request $request)
      {
          $productId = $request->input('productid');
-         $data =  Wishlist::where('productID', $productId)->get();
+         $data =  Wishlist::where('variationID', $productId)->get();
          if ($data->isEmpty()) {
-             $var = Variation::where('productID', $productId)->get();
-             foreach ($var as $v) {
+             $var = Variation::find($productId);
+            
                  $add = new Wishlist();
                  $add->userID = auth::user()->id;
-                 $add->productID = $v->productID;
-                 $add->variationID = $v->id;
+                 $add->productID = $var->productID;
+                 $add->variationID = $var->id;
                  $add->save();
                  $img = url('/asset/images/filllove.png');
                  return response()->json(['img' => $img]);
-             }
+           
          } else {
-             $item =  Wishlist::where('productID', $productId);
+             $item =  Wishlist::where('variationID', $productId);
              $item->delete();
              $img = url('/asset/images/love.png');
              $id = "add";

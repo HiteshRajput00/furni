@@ -17,23 +17,24 @@ class CartController extends Controller
     // cart function
     public function addcart($cid)
     {
-        $variation = Variation::where('productID', $cid)->get();
-        foreach ($variation as $var) {
-            $p = Cart::where('productID', $var->productID)->where('userID',Auth::user()->id)->get();
+        $variation = Variation::find( $cid);
+        
+     
+            $p = Cart::where('productID', $variation->productID)->where('userID',Auth::user()->id)->get();
             $c = $p->count();
             if ($p->isEmpty()) {
                 $data = new Cart();
                 $data->userID = Auth::user()->id;
-                $data->productID = $var->productID;
-                $data->variationID = $var->id;
+                $data->productID = $variation->productID;
+                $data->variationID = $variation->id;
                 $data->save();
             } else {
                 foreach ($p as $v) {
-                    if ($v->variationID !== $var->id) {
+                    if ($v->variationID !== $variation->id) {
                         $data = new Cart();
                         $data->userID = Auth::user()->id;
-                        $data->productID = $var->productID;
-                        $data->variationID = $var->id;
+                        $data->productID = $variation->productID;
+                        $data->variationID = $variation->id;
                         $data->save();
                     } else {
                         $u = cart::find($v->id);
@@ -42,7 +43,7 @@ class CartController extends Controller
                         ]);
                     }
                 }
-            }
+            
         }
         return redirect('/showcart');
     }
@@ -75,16 +76,36 @@ class CartController extends Controller
     {
         $orders = Order::where('userID', Auth::user()->id)->get();
 
-        // echo "<pre>";
-        // print_r($orders);
-        // die();
-        // $results = DB::table('orders')
-        //     ->select('orders.*')
-        //     ->join('other_table', function ($join) use () {
-        //         $join->on('other_table.id', '=', DB::raw("JSON_UNQUOTE(JSON_EXTRACT(your_table.json_column, '$.user_id'))"))
-        //             ->where('other_table.user_id', $userId);
-        //     })
-        //     ->get();
         return view('furni.Cart.myorders', compact('orders'));
+    }
+
+      //delete from cart 
+      public function deleteCart(Request $request){
+        $ID = $request->input('id');
+       $cart = Cart::find($ID);
+       $carts = Cart::all();
+    //    foreach($carts as  $c){
+    //     $total[] = $c->total_price * $c->quantity;
+    //    }
+        if($cart->quantity>=2){
+            $cart->update(['quantity'=>$cart->quantity - 1,]);
+              
+        $Newqty= $cart->quantity;
+        // $total_price = $total - $cart->total_price;
+        return response()->json(['qty'=>$Newqty]);
+       }else{
+        $cart->delete();
+        return response()->json(['msg1'=>"done"]);
+      }
+      }
+
+    public function changeCart(Request $request){
+        $ID = $request->input('id');
+        // return $ID;
+        $cart = Cart::find($ID);
+        // return $cart;
+        $cart->update(['quantity'=>$cart->quantity+1]);
+        $newqty = $cart->quantity ;
+        return response()->json(['data'=>$newqty]);
     }
 }

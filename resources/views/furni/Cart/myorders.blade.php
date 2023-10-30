@@ -31,20 +31,18 @@
 
                                 <td>
                                     <table>
-                                            @foreach (explode(',', $order->productID) as $product)
+                                        @foreach (explode(',', $order->productID) as $product)
                                             <tr>
                                                 <?php  $result = App\Models\Products::Class::find($product)?>
                                                 <td> {{ $result->product }}</td>
                                             </tr>
-                                            @endforeach
-                                       
+                                        @endforeach
+
                                     </table>
                                 </td>
                                 <td>{{ $order->Coupon }}</td>
-                                <td>{{ $order->discount }}</td>
-                                <td>{{ $order->totalamount }}</td>
-                                {{-- <td><a class="btn btn-primary" href="{{ route('delete', ['id' => $coupon->id]) }}">delete</a> --}}
-                                {{-- </td> --}}
+                                <td>${{ $order->discount }}</td>
+                                <td>${{ $order->totalamount }}</td>
                             </tr>
                         @endforeach
                     </tbody>
