@@ -10,6 +10,8 @@ use App\Models\Coupon;
 use App\Models\Order;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Models\Variation;
+
 class checkoutcontroller extends Controller
 {
     //checkout function
@@ -40,9 +42,9 @@ class checkoutcontroller extends Controller
     // place order function
     public function billingdetails(Request $request)
     {
-        // dd($request->all());
-      $name =  $request->input('fname');
-        if($name !== null){
+        //  dd(  $request->input('Useraddress'));
+      $addr =  $request->input('Useraddress');
+        if($addr === null){
         $rec = new BillingDetails();
         $rec->userID = Auth::user()->id;
         $rec->fname = $request->fname;
@@ -55,15 +57,17 @@ class checkoutcontroller extends Controller
         $rec->statecountry = $request->statecountry;
         $rec->zip = $request->zip;
         $rec->save();
-    }
+    
         $coupon = Coupon::find($request->code);
         $products = implode(",",$request->cartsproduct );
+        $productvariation = implode(",",$request->productvariation );
         $order = new Order();
         $orderNumber = 'ORD' . str::random(8);
         $order->orderNUM = $orderNumber;
       
         $order->userID = Auth::user()->id;
         $order->productID = $products;
+        $order->productvariation = $productvariation;
         $order->coupon = $coupon->code;
         $order->billing_detailsID = $rec->id;
         $dis = $request->subtotal - $request->total;
@@ -71,9 +75,37 @@ class checkoutcontroller extends Controller
         $order->totalamount = $request->total;
         $order->orderdate = now()->format('Y-m-d H:i:s');
         $order->save();
+        }else{
+           
+            $products = implode(",",$request->cartsproduct );
+            $productvariation = implode(",",$request->productvariation );
+            $order = new Order();
+            $orderNumber = 'ORD' . str::random(8);
+            $order->orderNUM = $orderNumber;
+          
+            $order->userID = Auth::user()->id;
+            $order->productID = $products;
+           
+            $order->productvariation = $productvariation;
+           if(!$request->code){
 
+           }else{
+            $coupon = Coupon::find($request->code);
+            $order->coupon = $coupon->code;
+        }
+            $order->billing_detailsID = $addr;
+            $dis = $request->subtotal - $request->total;
+            $order->discount = $dis ;
+            $order->totalamount = $request->total;
+            $order->orderdate = now()->format('Y-m-d H:i:s');
+            $order->save();
+        }
         $cart = Cart::where('userID',Auth::user()->id)->get();
         foreach($cart as $c){
+            $product = Variation::find($c->variationID);
+            // dd($product);
+            $stock = $product->stock - $c->quantity;
+            $product->update(['stock'=>$stock]);
             $c->delete();
         }
 

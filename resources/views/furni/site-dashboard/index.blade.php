@@ -17,8 +17,8 @@
                        
                         <br><br>
                         <a class="product-item" href="{{ route('explore', ['id' => $cat->id]) }}">
-                            <img src="{{ asset('/upload/' . $cat->image) }}" class="img-fluid product-thumbnail"
-                                >
+                            <img src="{{ asset('/upload/' . $cat->image) }}" class="img-fluid product-thumbnail">
+                                
 
                             <span class="icon-cross">
                                 <button id="" type="button"><img

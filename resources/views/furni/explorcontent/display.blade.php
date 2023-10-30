@@ -13,8 +13,9 @@
               
                 <div class="product-section">
                     <div class="container">
-                        @foreach ($products as $product)
+                       
                             <div class="row">
+                                @foreach ($products as $product)
                                 <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
                                     <a class="product-item" href="{{ route('product', ['id' => $product->id]) }}">
                                         <img src="{{ asset('/upload/' . $product->image) }}"
@@ -26,8 +27,9 @@
                                         </span>
                                     </a>
                                 </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                      
                     </div>
                 </div>
             </div>

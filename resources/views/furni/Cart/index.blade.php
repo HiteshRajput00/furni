@@ -64,7 +64,7 @@
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <button class="btn btn-black btn-sm btn-block">Update Cart</button>
+                        <a href="/myorders" class="btn btn-black btn-sm btn-block">MY Orders</a>
                     </div>
                     <div class="col-md-6">
                         <button class="btn btn-outline-black btn-sm btn-block">Continue Shopping</button>
