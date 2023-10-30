@@ -9,8 +9,6 @@
                 @foreach ($cats as $cat)
                     <?php $products = DB::table('products')
                         ->where('categoryID', $cat->id)
-                        ->join('variations', 'productID', '=', 'products.id')
-                        ->select('products.id', 'product', 'variations.image', 'variations.price')
                         ->get(); ?>
                      <br>
                     <div class="row">
@@ -24,11 +22,13 @@
                         @foreach ($products as $product)
                             <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
                                 <br>
+                                <?php $var = DB::table('variations')->where('productID', $product->id)->first() ?>
+                                                    
                                 <a class="product-item" href="{{ route('product', ['id' => $product->id]) }}">
-                                    <img src="{{ asset('/upload/' . $product->image) }}" class="img-fluid product-thumbnail"
+                                    <img src="{{ asset('/upload/' . $var->image) }}" class="img-fluid product-thumbnail"
                                         height="500px" width="500px">
                                     <h3 class="product-title">{{ $product->product }}</h3>
-                                    <h3 class="product-title">{{ $product->price }}</h3>
+                                    <h3 class="product-title">{{ $var->price }}</h3>
                                     <span class="icon-cross">
                                         <button id="" type="button"><img
                                                 src="{{ url('/asset/images/cross.svg') }}" class="img-fluid"></button>

@@ -178,12 +178,12 @@
                         </li>
                         <li class="mega-menu mega-menu-sm">
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="bi bi-person"></i><span class="nav-text">Profile</span>
+                                <i class="bi bi-person"></i><span class="nav-text">Details</span>
                             </a>
                             <ul aria-expanded="false">
 
                                 <li><a href="/profile">Admin Profile</a></li>
-                                <li><a href="/users">Users list</a></li>
+                                <li><a href="/orders">All orders</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // use App\Http\Controllers\Controller;
+
+use App\Models\Order;
 use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,8 +17,12 @@ class AdminController extends Controller
     {
         $data = Products::count();
         $userCount = DB::table('users')->where('role', 'user')->count();
-        //dd($data);
-        return view('admin.Dashboard.index', compact('data', 'userCount'));
+        $order = Order::all();
+        foreach($order as $od){
+            $price[] =$od->totalamount;
+        }
+         //dd($data);
+        return view('admin.Dashboard.index', compact('data', 'userCount','price'));
     }
    
     public function index(){
@@ -84,7 +90,11 @@ class AdminController extends Controller
         //         return back()->withErrors(['email' => 'Invalid credentials']);
         //     }
         // }
-       
+        
+        public function orders(){
+            $orders = Order::all();
+            return view('admin.details.orders', compact('orders'));
+        }
 
 
 }

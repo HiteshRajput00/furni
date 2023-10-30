@@ -64,29 +64,35 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <p class="text-muted mb-0">{{ $v->size }}</p>
-                                        {{ $v->id }}
+
                                     </div>
                                 </div>
                                 {{ session(['productID' => $products->id]) }}
                                 <hr>
-                                @if (Auth::user())
-                                    <a class="btn" id="load-page-button"
-                                        href="{{ route('shop.addcart', ['id' => $v->productID]) }}">add to cart</a>
-                                    <hr>
-                                    @if ($wishlist->isEmpty())
-                                        <button type="button" id="load-button" data-status="add"
-                                            data-id="{{ $products->id }}"><img height="30px" width="30px" id="heartimg"
-                                                src="{{ url('/asset/images/love.png') }}"></button>
-                                    @else
-                                        <button type="button" id="remove" data-status="remove"
-                                            data-id="{{ $products->id }}"><img height="30px" width="30px" id="heartimg"
-                                                src="{{ url('/asset/images/filllove.png') }}"></button>
-                                    @endif
+                                @if ($v->stock === 0)
+                                    <h4>sorry this is unavilable</h4>
                                 @else
-                                    <a class="btn" id="load-page-button" href="/furni/login">add to cart</a>
-                                    <hr>
-                                    <a id="load-page-button" href="/furni/login"><img height="30px" width="30px"
-                                            id="heartimg" src="{{ url('/asset/images/love.png') }}"></a>
+                                    @if (Auth::user())
+                                        <a class="btn" id="load-page-button"
+                                            href="{{ route('shop.addcart', ['id' => $v->id]) }}">add to cart</a>
+                                        <hr>
+                                       <?php $wishlist = App\Models\Wishlist::class::where('variationID', $v->id)
+                                       ->where('userID', Auth::user()->id)->get();?>
+                                        @if ($wishlist->isEmpty())
+                                            <button type="button" class="load-button" data-status="add"
+                                                data-id="{{ $v->id }}"><img height="30px" width="30px"
+                                                    id="{{ $v->id }}" src="{{ url('/asset/images/love.png') }}"></button>
+                                        @else
+                                            <button type="button" class="remove" data-status="remove"
+                                                data-id="{{ $v->id }}"><img height="30px" width="30px"
+                                                    id="{{ $v->id }}" src="{{ url('/asset/images/filllove.png') }}"></button>
+                                        @endif
+                                    @else
+                                        <a class="btn" id="load-page-button" href="/furni/login">add to cart</a>
+                                        <hr>
+                                        <a id="load-page-button" href="/furni/login"><img height="30px" width="30px"
+                                                id="{{ $v->id }}" src="{{ url('/asset/images/love.png') }}"></a>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -99,9 +105,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#load-button').on('click', function() {
+            $('.load-button').on('click', function() {
                 // e.preventDefault();
                 var ID = $(this).data("id");
+                const img = document.getElementById(ID);
                 var status = $(this).data("status");
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
@@ -114,7 +121,8 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        $("#heartimg").attr('src', data.img)
+                     
+                        img.src= data.img;
                         // $("#load-button").attr('',data.btn)
                     },
                     error: function(xhr, status, error) {
@@ -126,8 +134,9 @@
         });
 
         $(document).ready(function() {
-            $('#remove').on('click', function() {
+            $('.remove').on('click', function() {
                 var ID = $(this).data("id");
+                const img = document.getElementById(ID);
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
                     url: "{{ route('removewishlist') }}",
@@ -138,7 +147,8 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        $("#heartimg").attr('src', data.img)
+                       
+                        img.src= data.img;
                         // $("#remove").attr('id',data.btn)
                     },
                     error: function(xhr, status, error) {

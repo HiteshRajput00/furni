@@ -105,7 +105,11 @@ class checkoutcontroller extends Controller
             $product = Variation::find($c->variationID);
             // dd($product);
             $stock = $product->stock - $c->quantity;
+            if($stock == 0){
+                $product->update(['status'=>0]);
+            }else{
             $product->update(['stock'=>$stock]);
+        }
             $c->delete();
         }
 

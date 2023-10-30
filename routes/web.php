@@ -41,11 +41,12 @@ Route::get('/logout', [usercontroller::class, 'logout']);
 Route::get('/userprofile', [usercontroller::class, 'userprofile']);
 
 //  admin routes
-Route::group(['middleware' => 'Auth', 'admin'], function () {
+Route::group(['middleware' =>  'Admin'], function () {
   // admin home
   Route::get('/home', [AdminController::class, 'home'])->name('home');
   Route::get('/profile', [AdminController::class, 'profile']);
   Route::get('/adminlogout', [AdminController::class, 'adminlogout']);
+  Route::get('/orders', [AdminController::class, 'orders']);
   // blog routes
   Route::get('/addblog', [Blogcontroller::class, 'addblog'])->name('addblog');
   Route::post('/saveblog', [Blogcontroller::class, 'saveblog'])->name('saveblog');
@@ -83,6 +84,8 @@ Route::group(['middleware' => 'Auth'], function () {
   Route::get('/showcart', [CartController::class, 'showcart'])->name('showcart');
   Route::get('/delcart{Cid}', [CartController::class, 'delcart'])->name('delcart');
   Route::get('/myorders', [CartController::class, 'myorders'])->name('myorders');
+  Route::post('/deletecart', [CartController::class, 'deletecart'])->name('deletecart');
+  Route::post('/changecart', [CartController::class, 'changecart'])->name('changecart');
   // wishlist route
   Route::post('/addwishlist', [WishlistController::class, 'addwishlist'])->name('addwishlist');
   Route::post('/removewishlist', [WishlistController::class, 'removewishlist'])->name('removewishlist');

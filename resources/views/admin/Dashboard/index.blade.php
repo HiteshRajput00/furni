@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <h3 class="card-title text-white">Net Profit</h3>
                             <div class="d-inline-block">
-                                <h2 class="text-white">$ 0</h2>
+                                <h2 class="text-white">$ {{ array_sum($price) }}</h2>
                                 <p id="p2" class="text-white mb-0"></p>
                                 <script>
                                     var date = new Date();
