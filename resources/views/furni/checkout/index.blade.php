@@ -9,24 +9,24 @@
                     </div>
                 </div>
             </div>
-           
+
             <form method="post" action="/billingdetails">
-                @if($address->isEmpty())
+                @if ($address->isEmpty())
                 @else
-                @foreach ($address as $addr )
-                <div class="purchase_wreap" style="border: 2px solid black">
-                <div class="purchase_hd" >
-                    <input type="radio" id="test2" name="radio-group" value="{{ $addr->id }}" />
-                    <label for="test2">
-                        <div>
-                            <h6 style="display: inline">{{ $addr->companyname }}</h6>
-                            <p>{{ $addr->street }},houseNO.  {{ $addr->houseNO }}</p>
+                    @foreach ($address as $addr)
+                        <div class="purchase_wreap" style="border: 2px solid black">
+                            <div class="purchase_hd">
+                                <input type="radio" id="test2" name="Useraddress" value="{{ $addr->id }}" />
+                                <label for="test2">
+                                    <div>
+                                        <h6 style="display: inline">{{ $addr->companyname }}</h6>
+                                        <p>{{ $addr->street }},houseNO. {{ $addr->houseNO }}</p>
+                                    </div>
+
+                                </label>
+                            </div>
                         </div>
-                        
-                    </label>
-                </div>
-                </div>
-                @endforeach
+                    @endforeach
                 @endif
                 @csrf
                 <div class="row">
@@ -240,19 +240,24 @@
                                         <select class="form-select" aria-label="Default select example" id="input"
                                             name="code">
                                             <option value="" selected> select coupon</option>
-                                            @foreach ($coupons as $c)
-                                                <option value="{{ $c->id }}"> {{ $c->name }}
-                                                </option>
-                                            @endforeach
+                                            @if ($coupons)
+                                                @foreach ($coupons as $c)
+                                                    <?php  $order = App\Models\Order::Class::where('Coupon',$c->code)->where('userID',Auth::user()->id)->get(); ?>
+                                                    @if ($order->isEmpty())
+                                                        <option value="{{ $c->id }}"> {{ $c->name }} </option>
+                                                    
+                                                    @endif
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div id="btndiv" class="input-group-append">
-                                        <a id="submitButton"  class="btn btn-black">Apply</a>
-                                        
+                                        <a id="submitButton" class="btn btn-black">Apply</a>
+
                                     </div>
                                     <div id="btndiv" class="input-group-append">
                                         <a id="remove" style="display: none" class="btn">x </a>
-                                     </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -271,16 +276,22 @@
                                             <th>Total</th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($carts as $cart)
-                                                <tr>
-                                                    <td>{{ $cart->products->product }} <strong class="mx-2">x</strong>
-                                                        {{ $cart->quantity }}</td>
-                                                    <?php $data[] = $cart->variations->price * $cart->quantity; ?>
-                                                    <td>${{ $cart->variations->price * $cart->quantity }}</td>
-                                                </tr>
-                                                <input type="hidden" id="product" name="cartsproduct[]"
-                                                value="{{ $cart->productID }}">
-                                            @endforeach
+                                            @if ($carts->isEmpty())
+                                            @else
+                                                @foreach ($carts as $cart)
+                                                    <tr>
+                                                        <td>{{ $cart->products->product }} <strong
+                                                                class="mx-2">x</strong>
+                                                            {{ $cart->quantity }}</td>
+                                                        <?php $data[] = $cart->variations->price * $cart->quantity; ?>
+                                                        <td>${{ $cart->variations->price * $cart->quantity }}</td>
+                                                    </tr>
+                                                    <input type="hidden" id="product" name="cartsproduct[]"
+                                                        value="{{ $cart->productID }}">
+                                                    <input type="hidden" id="variation" name="productvariation[]"
+                                                        value="{{ $cart->variationID }}">
+                                                @endforeach
+                                            @endif
                                             <tr>
                                                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong>
                                                 </td>
@@ -305,8 +316,7 @@
 
                                     <input type="hidden" id="subtotal" name="subtotal"
                                         value="{{ array_sum($data) }}">
-                                        <input type="hidden" id="inputtotal" name="total"
-                                        value="{{ $total }}">
+                                    <input type="hidden" id="inputtotal" name="total" value="{{ $total }}">
 
 
 
@@ -392,9 +402,9 @@
                     $('#discount').text(discountedPrice);
                     $('#final').text(discountedPrice);
                     $('#inputtotal').val(discountedPrice);
-                    document.getElementById("remove").style.display='block';
-                    
-                     $('#submitButton').hide();
+                    document.getElementById("remove").style.display = 'block';
+
+                    $('#submitButton').hide();
                 }
 
             });
@@ -407,15 +417,12 @@
                 var coupon = $("#input option:selected").val();
                 coupon.selectedIndex = 0;
                 $('#after').text("");
-                    $('#discount').text('');
-                    $('#final').text(productPrice);
-                    $('#inputtotal').val(productPrice);
-                    document.getElementById("submitButton").style.display='block';
-                    $('#remove').hide();
+                $('#discount').text('');
+                $('#final').text(productPrice);
+                $('#inputtotal').val(productPrice);
+                document.getElementById("submitButton").style.display = 'block';
+                $('#remove').hide();
             });
         });
-
-     
-
     </script>
 @endsection

@@ -18,6 +18,7 @@ class ProductController extends Controller
     
     public function explore($id)
     {
+        // $products = Products::where('categoryID',$id)->get();
         $products = DB::table('products')
             ->where('categoryID', $id)
             ->join('variations', 'productID', '=', 'products.id')

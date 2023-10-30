@@ -62,6 +62,7 @@ class variation extends Model
         'colourID',
         'materialID',
         'size',
+        'stock',
        
       ];
     public function products(){
