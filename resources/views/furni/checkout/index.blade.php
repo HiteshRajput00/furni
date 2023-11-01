@@ -253,10 +253,11 @@
                                     </div>
                                     <div id="btndiv" class="input-group-append">
                                         <a id="submitButton" class="btn btn-black">Apply</a>
+                                        <a id="remove" style="display: none" class="btn btn-black">x </a>
 
                                     </div>
                                     <div id="btndiv" class="input-group-append">
-                                        <a id="remove" style="display: none" class="btn">x </a>
+                                       
                                     </div>
 
                                 </div>
@@ -370,6 +371,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        {{-- <a class="btn btn-primary" href="https://buy.stripe.com/test_cN25kn1Vy3252woeUU">make payment</a> --}}
                                         <button class="btn btn-black btn-lg py-3 btn-block"
                                             onclick="window.location='/thankyou'">Place Order</button>
                                     </div>
@@ -402,7 +404,7 @@
                     $('#discount').text(discountedPrice);
                     $('#final').text(discountedPrice);
                     $('#inputtotal').val(discountedPrice);
-                    document.getElementById("remove").style.display = 'block';
+                    document.getElementById("remove").style.display = '';
 
                     $('#submitButton').hide();
                 }
@@ -420,7 +422,7 @@
                 $('#discount').text('');
                 $('#final').text(productPrice);
                 $('#inputtotal').val(productPrice);
-                document.getElementById("submitButton").style.display = 'block';
+                document.getElementById("submitButton").style.display = '';
                 $('#remove').hide();
             });
         });

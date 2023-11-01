@@ -12,7 +12,7 @@
                
                     <div class="col-15 col-md-4 col-lg-4 mb-8 mb-md-0">
                         <br><br>
-                        <span> <button id="" type="button"
+                        <span> <button id="" type="button" onclick="showSweetAlert()"
                                 class="btn btn-primary">{{ $cat->furnituretype }}</button></span>
                        
                         <br><br>
@@ -325,10 +325,18 @@
                         </div>
                     </div>
                 @endforeach
-
-
             </div>
         </div>
     </div>
     <!-- End Blog Section -->
+    <script>
+        function showSweetAlert() {
+            Swal.fire({
+                title: 'Hello, SweetAlert!',
+                text: 'This is a Laravel SweetAlert example.',
+                icon: 'success',
+                confirmButtonText: 'cancel'
+            });
+        }
+    </script>
 @endsection

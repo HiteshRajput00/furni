@@ -210,6 +210,7 @@
     </footer>
     <!-- End Footer Section -->
     <script src="{{ url('/asset/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ url('/asset/js/tiny-slider.js') }}"></script>
     {{-- <script src="{{ url('/asset/js/custom.js') }}"></script> --}}
 

@@ -17,6 +17,13 @@ class checkoutcontroller extends Controller
     //checkout function
     public function checkout()
     {
+
+        // $stripe = new \Stripe\StripeClient( env('STRIPE_SECRET') );
+        // #################### Create setupintent ##########################
+        // $intent =  $stripe->setupIntents->create([
+        //     'payment_method_types' => ['card'],
+        // ]);
+        // dd($intent);
         // $user = auth::user()->id;
         $carts = Cart::where('userID', Auth::user()->id)->get();
         $address = BillingDetails::where('userID',Auth::user()->id)->get();
