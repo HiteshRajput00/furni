@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\variation;
+use App\Models\Variation;
 
 class products extends Model
 {
@@ -41,7 +41,7 @@ class products extends Model
       ];
       public function variation()
      {
-         return $this->belongsTo(variation::class);
+         return $this->hasMany(Variation::class,'productID','id');
      }
 
 }

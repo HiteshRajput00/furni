@@ -11,13 +11,16 @@
 
     <meta name="description" content="" />
     <meta name="keywords" content="bootstrap, bootstrap4" />
-    <link
-        rel="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-  free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
  
 		<!-- Bootstrap CSS -->
 		<link href="{{ url('/asset/css/bootstrap.min.css') }}" rel="stylesheet">
 		<link href="{{ url('/asset/css/tiny-slider.css') }}" rel="stylesheet">
 		<link href="{{ url('/asset/css/style.css') }}" rel="stylesheet">
+        {{-- <link rel="stylesheet" href="{{ asset('/asset/css/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/asset/css/css/responsive.css') }}"> --}}
+        <script src="https://js.stripe.com/v3/"></script>
 		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
 	</head>
 
@@ -45,7 +48,7 @@
                             <input type="text" class="form-control mr-sm-2" name="search" placeholder="search">
                         </div>
                         <div class="col">
-                            <p><button class="btn btn-white-outline">search</button></p>
+                            <p><button class="btn btn-white-outline"><i style="color: white;" class="fas fa-search"></i></button></p>
                                
                         </div>
                      </form>
@@ -142,10 +145,10 @@
                         Pellentesque habitant</p>
                         
                     <ul class="list-unstyled custom-social">
-                        <li><a href="#"><span style="color: rgb(247, 239, 239)" class="fa fa-brands fa-facebook-f"></span></a></li>
-                        <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-                        <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
-                        <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><span class="fab fa-linkedin"></span></a></li>
                     </ul>
                 </div>
 
