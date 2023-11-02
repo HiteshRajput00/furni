@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-// use App\Http\Controllers\Controller;
-
+use App\Http\Controllers\Controller;
+use App\Models\BillingDetails;
 use App\Models\Order;
 use App\Models\Products;
 use App\Models\User;
@@ -17,12 +17,24 @@ class AdminController extends Controller
     {
         $data = Products::count();
         $userCount = DB::table('users')->where('role', 'user')->count();
-        $order = Order::all();
-        foreach($order as $od){
+        $orders = Order::all();
+        foreach($orders as $od){
             $price[] =$od->totalamount;
         }
+        $lastMonthEarnings = Order::whereBetween('created_at', [
+            now()->startOfMonth(),
+            now()->endOfMonth()    
+        ])->sum('totalamount');
+
+        $lastMonthOrder = Order::whereBetween('created_at',
+        [
+            now()->startOfMonth(),
+            now()->endOfMonth()  
+        ])->get();
+
+        // $customers = BillingDetails::with('Orders')->get();
          //dd($data);
-        return view('admin.Dashboard.index', compact('data', 'userCount','price'));
+        return view('admin.Dashboard.index', compact('data','orders', 'userCount','price','lastMonthEarnings','lastMonthOrder'));
     }
    
     public function index(){
@@ -74,23 +86,7 @@ class AdminController extends Controller
              Auth::logout();
             return redirect('/');
         }
-
-        // public function log(Request $request){
-           
-        //     $credentials = $request->only('email', 'password');
-        
-        //     if (Auth::guard('web')->attempt($credentials)) {
-                
-        //         return redirect('/');
-        //     } elseif (Auth::guard('admin')->attempt($credentials)) {
-               
-        //         return redirect('/home');
-        //     } else {
-               
-        //         return back()->withErrors(['email' => 'Invalid credentials']);
-        //     }
-        // }
-        
+ 
         public function orders(){
             $orders = Order::all();
             return view('admin.details.orders', compact('orders'));

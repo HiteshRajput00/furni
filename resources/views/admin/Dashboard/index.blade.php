@@ -1,6 +1,5 @@
 @extends('admin.structure.master_layout')
 @section('content')
-
     <div class="content-body">
         <div class="container-fluid mt-3">
             <div class="row">
@@ -10,13 +9,9 @@
                             <h3 class="card-title text-white">total Products </h3>
                             <div class="d-inline-block">
                                 <h2 class="text-white"> {{ $data }}</h2>
-                                {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
-                                <p id="p1" class="text-white mb-0"></p>
-                                <script>
-                                    var date = new Date();
-                                    var current_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-                                    document.getElementById("p1").innerHTML = current_date;
-                                </script>
+                                <p id="p3" class="text-white mb-0">
+                                    {{ now()->format('Y-m-d') }}
+                                </p>
                             </div>
                             <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
                         </div>
@@ -28,14 +23,9 @@
                             <h3 class="card-title text-white">Net Profit</h3>
                             <div class="d-inline-block">
                                 <h2 class="text-white">$ {{ array_sum($price) }}</h2>
-                                <p id="p2" class="text-white mb-0"></p>
-                                <script>
-                                    var date = new Date();
-
-
-                                    var n = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-                                    document.getElementById("p2").innerHTML = n;
-                                </script>
+                                <p id="p3" class="text-white mb-0">
+                                    {{ now()->format('Y-m-d') }}
+                                </p>
 
                             </div>
                             <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
@@ -48,15 +38,9 @@
                             <h3 class="card-title text-white"> Customers</h3>
                             <div class="d-inline-block">
                                 <h2 class="text-white">{{ $userCount }}</h2>
-                                <p id="p3" class="text-white mb-0"></p>
-                                <script>
-                                    var date = new Date();
-
-
-                                    var n = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-                                    document.getElementById("p3").innerHTML = n;
-                                </script>
-
+                                <p id="p3" class="text-white mb-0">
+                                {{ now()->format('Y-m-d') }}
+                            </p>
                             </div>
                             <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                         </div>
@@ -74,36 +58,65 @@
                                     <div>
                                         <h4 class="mb-1">Product Sales</h4>
                                         <p>Total Earnings of the Month</p>
-                                        <h3 class="m-0">$ 12,555</h3>
+                                        <h3 class="m-0">$ {{ $lastMonthEarnings }}</h3>
                                     </div>
                                     <div>
                                         <ul>
-                                            <li class="d-inline-block mr-3"><a class="text-dark" href="#">Day</a></li>
-                                            <li class="d-inline-block mr-3"><a class="text-dark" href="#">Week</a>
-                                            </li>
-                                            <li class="d-inline-block"><a class="text-dark" href="#">Month</a></li>
+                                           
+                                            <li class="d-inline-block"><a class="text-dark" href="#">{{ now()->format('Y-m-d') }}</a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="chart-wrapper">
-                                    <canvas id="chart_widget_2"></canvas>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="w-100 mr-2">
-                                            <h6>Pixel 2</h6>
-                                            <div class="progress" style="height: 6px">
-                                                <div class="progress-bar bg-danger" style="width: 40%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="ml-2 w-100">
-                                            <h6>iPhone X</h6>
-                                            <div class="progress" style="height: 6px">
-                                                <div class="progress-bar bg-primary" style="width: 80%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <br><br>
+                                <h4>Order Summary </h4>
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+
+                                            <th scope="col">OrderNO</th>
+                                            <th scope="col">product</th>
+                                            <th scope="">quantity</th>
+                                            <th scope="col">coupon</th>
+                                            <th scope="col">Discount</th>
+                                            <th scope="col">total price</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($lastMonthOrder as $order)
+                                            <tr>
+
+                                                <td> {{ $order->orderNUM }}</td>
+
+                                                <td>
+                                                    <table>
+                                                        @foreach (explode(',', $order->productID) as $product)
+                                                            <tr>
+                                                                <?php  $result = App\Models\Products::Class::find($product)?>
+                                                                <td> {{ $result->product }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        @foreach (explode(',', $order->variation_qty) as $qty)
+                                                            <tr>
+                                                                <td> {{ $qty }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
+                                                <td>{{ $order->Coupon }}</td>
+                                                <td>${{ $order->discount }}</td>
+                                                <td>${{ $order->totalamount }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
                     </div>
@@ -116,8 +129,11 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Order Summary</h4>
-                            <div id="morris-bar-chart"></div>
+                            <h4 class="card-title">Products Summary</h4>
+                            <div id="morris-bar-chart">
+
+                             
+                            </div>
                         </div>
                     </div>
 
@@ -187,59 +203,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <img src="{{ url('/admin/images/users/8.jpg') }}" class="rounded-circle" alt="">
-                                <h5 class="mt-3 mb-1">Ana Liem</h5>
-                                <p class="m-0">Senior Manager</p>
-                                <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <img src="{{ url('/admin/images/users/5.jpg') }}" class="rounded-circle" alt="">
-                                <h5 class="mt-3 mb-1">John Abraham</h5>
-                                <p class="m-0">Store Manager</p>
-                                <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <img src="{{ url('/admin/images/users/7.jpg') }}" class="rounded-circle" alt="">
-                                <h5 class="mt-3 mb-1">John Doe</h5>
-                                <p class="m-0">Sales Man</p>
-                                <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <img src="{{ url('/admin/images/users/1.jpg') }}" class="rounded-circle" alt="">
-                                <h5 class="mt-3 mb-1">Mehedi Titas</h5>
-                                <p class="m-0">Online Marketer</p>
-                                <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -253,121 +216,62 @@
                                                 <th>Product</th>
                                                 <th>Country</th>
                                                 <th>Status</th>
-                                                <th>Payment Method</th>
-                                                <th>Activity</th>
+                                                <th>Payment </th>
+                                                <th>Amount </th>
+                                              
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><img src="{{ url('/admin/images/avatar/1.jpg') }}"
-                                                        class=" rounded-circle mr-3" alt="">Sarah Smith</td>
-                                                <td>iPhone X</td>
-                                                <td>
-                                                    <span>United States</span>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <div class="progress" style="height: 6px">
-                                                            <div class="progress-bar bg-success" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-circle-o text-success  mr-2"></i> Paid</td>
-                                                <td>
-                                                    <span>Last Login</span>
-                                                    <span class="m-0 pl-3">10 sec ago</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="{{ url('/admin/images/avatar/2.jpg') }}"
-                                                        class=" rounded-circle mr-3" alt="">Walter R.</td>
-                                                <td>Pixel 2</td>
-                                                <td><span>Canada</span></td>
-                                                <td>
-                                                    <div>
-                                                        <div class="progress" style="height: 6px">
-                                                            <div class="progress-bar bg-success" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-circle-o text-success  mr-2"></i> Paid</td>
-                                                <td>
-                                                    <span>Last Login</span>
-                                                    <span class="m-0 pl-3">50 sec ago</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="{{ url('/admin/images/avatar/3.jpg') }}"
-                                                        class=" rounded-circle mr-3" alt="">Andrew D.</td>
-                                                <td>OnePlus</td>
-                                                <td><span>Germany</span></td>
-                                                <td>
-                                                    <div>
-                                                        <div class="progress" style="height: 6px">
-                                                            <div class="progress-bar bg-warning" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-circle-o text-warning  mr-2"></i> Pending</td>
-                                                <td>
-                                                    <span>Last Login</span>
-                                                    <span class="m-0 pl-3">10 sec ago</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="{{ url('/admin/images/avatar/6.jpg') }}"
-                                                        class=" rounded-circle mr-3" alt=""> Megan S.</td>
-                                                <td>Galaxy</td>
-                                                <td><span>Japan</span></td>
-                                                <td>
-                                                    <div>
-                                                        <div class="progress" style="height: 6px">
-                                                            <div class="progress-bar bg-success" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-circle-o text-success  mr-2"></i> Paid</td>
-                                                <td>
-                                                    <span>Last Login</span>
-                                                    <span class="m-0 pl-3">10 sec ago</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="{{ url('/admin/images/avatar/4.jpg') }}"
-                                                        class=" rounded-circle mr-3" alt=""> Doris R.</td>
-                                                <td>Moto Z2</td>
-                                                <td><span>England</span></td>
-                                                <td>
-                                                    <div>
-                                                        <div class="progress" style="height: 6px">
-                                                            <div class="progress-bar bg-success" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-circle-o text-success  mr-2"></i> Paid</td>
-                                                <td>
-                                                    <span>Last Login</span>
-                                                    <span class="m-0 pl-3">10 sec ago</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="{{ url('/admin/images/avatar/5.jpg') }}"
-                                                        class=" rounded-circle mr-3" alt="">Elizabeth W.</td>
-                                                <td>Notebook Asus</td>
-                                                <td><span>China</span></td>
-                                                <td>
-                                                    <div>
-                                                        <div class="progress" style="height: 6px">
-                                                            <div class="progress-bar bg-warning" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-circle-o text-warning  mr-2"></i> Pending</td>
-                                                <td>
-                                                    <span>Last Login</span>
-                                                    <span class="m-0 pl-3">10 sec ago</span>
-                                                </td>
-                                            </tr>
+                                            @foreach ($orders as $order)
+                                                <?php $customer = App\Models\BillingDetails::class::find($order->billing_detailsID); ?>
+                                                <tr>
+                                                    <td><strong style="font-size: 25px">{{ $customer->fname }}&nbsp;{{ $customer->lname  }}</strong></td>
+                                                    <td>
+
+                                                        <table>
+                                                            @foreach (explode(',', $order->productID) as $product)
+                                                                <tr>
+                                                                    <?php  $result = App\Models\Products::Class::find($product)?>
+                                                                    <td> {{ $result->product }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+
+
+                                                    </td>
+                                                    <td>
+                                                        <span>{{ $customer->statecountry }}</span>
+                                                    </td>
+                                                    @if ($order->status === 1)
+                                                        <td>
+                                                            <div>
+
+                                                                <div class="progress" style="height: 6px">
+                                                                    <div class="progress-bar bg-success"
+                                                                        style="width: 50%"></div>
+                                                                </div>
+
+                                                            </div>
+                                                        </td>
+                                                        <td><i class="fa fa-circle-o text-success  mr-2"></i> Paid</td>
+                                                        <td>${{ $order->totalamount }}</td>
+                                                        @else
+                                                        <td>
+                                                            <div>
+                                                                <div class="progress" style="height: 6px">
+                                                                    <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><i class="fa fa-circle-o text-warning  mr-2"></i> Pending</td>
+                                                        <td>${{ $order->totalamount }}</td>
+                                                    @endif
+                                                
+                                                    
+                                                </tr>
+                                            @endforeach
+                                           
+                                          
                                         </tbody>
                                     </table>
                                 </div>
@@ -377,4 +281,4 @@
                 </div>
             </div>
         </div>
-@endsection
+    @endsection
