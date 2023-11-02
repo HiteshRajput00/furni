@@ -2,7 +2,7 @@
 
 
 use App\Http\Controllers\Admin\AddProductController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Blogcontroller;
 use App\Http\Controllers\furnicontroller\CartController;
 use App\Http\Controllers\Admin\CategoryController;

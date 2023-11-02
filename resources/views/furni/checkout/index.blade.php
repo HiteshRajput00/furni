@@ -327,6 +327,8 @@
                                                         value="{{ $cart->productID }}">
                                                     <input type="hidden" id="variation" name="productvariation[]"
                                                         value="{{ $cart->variationID }}">
+                                                        <input type="hidden" id="variation_qty" name="variation_qty[]"
+                                                        value="{{ $cart->quantity }}">
                                                 @endforeach
                                             @endif
                                             <tr>

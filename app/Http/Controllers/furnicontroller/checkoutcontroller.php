@@ -67,6 +67,7 @@ class checkoutcontroller extends Controller
         ////////////// order details //////////////
         $products = implode(",", $request->cartsproduct);
         $productvariation = implode(",", $request->productvariation);
+        $variation_qty = implode(",", $request->variation_qty);
         $order = new Order();
         $orderNumber = 'ORD' . str::random(8);
         $order->orderNUM = $orderNumber;
@@ -74,6 +75,7 @@ class checkoutcontroller extends Controller
         $order->userID = Auth::user()->id;
         $order->productID = $products;
         $order->productvariation = $productvariation;
+        $order->variation_qty = $variation_qty;
         
         //////////// checking coupon /////////////////////
         if ($request->code === null) {
