@@ -19,7 +19,7 @@
                             <div class="card-body p-0">
                                 <ul class="list-group list-group-flush rounded-3">
                                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fas fa-globe fa-lg text-warning"></i>
+                                       
 
                                         <h4>{{ $products->product }}</h4>
                                     </li>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\messagemail;
 use App\Models\Blog;
 use App\Models\Furniture;
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,8 +67,9 @@ class usercontroller extends Controller
     //shop function
     public function shop()
     {
-        $cats = furniture::all();
-        return view('furni.shop.index', compact('cats'));
+        $categories = furniture::all();
+        $products = Products::paginate(2);
+        return view('furni.shop.index', compact('categories','products'));
     }
 
     //faaltu ke function

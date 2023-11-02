@@ -25,7 +25,6 @@
                                         src="{{ url('/asset/images/cross.svg') }}"class="img-fluid"></button>
                             </span>
                         </a>
-                        <a> <i class="far fa-bookmark"></i></a>
                         <br><br>
                         <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
                             vulputate velit imperdiet dolor tempor tristique.</p>
