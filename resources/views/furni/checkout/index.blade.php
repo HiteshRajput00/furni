@@ -84,7 +84,7 @@
                                     <div class="form-group">
                                         <label for="test1" class="text-black" data-bs-toggle="collapse"
                                             href="#{{ $addr->companyname }}" role="button" aria-expanded="false"
-                                            aria-controls="{{ $addr->companyname }}"><input type="radio" value="1"
+                                            aria-controls="{{ $addr->companyname }}"><input  type="radio" value="{{ $addr->id }}"
                                                 name="Useraddress" id="test1"><strong style="font-size: 22px">
                                                 {{ $addr->companyname }}
                                                 &nbsp;{{ $addr->street }},houseNO. {{ $addr->houseNO }}</strong></label>
@@ -174,14 +174,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-
                                 <br>
 
                                 <div class="form-group">
                                     <label for="test2" class="text-black" data-bs-toggle="collapse"
                                         href="#ship_different_address" role="button" aria-expanded="false"
-                                        aria-controls="ship_different_address"><input type="radio" value="1"
-                                            name="Useraddress" id="test2"> <strong style="font-size: 22px">Deliver To
+                                        aria-controls="ship_different_address"><input type="radio" name="Useraddress" value=""
+                                             id="test2"> <strong style="font-size: 22px">Deliver To
                                             A Different Address?</strong></label>
                                     <div class="collapse" id="ship_different_address">
                                         <div class="py-2">
@@ -396,7 +395,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         $(document).ready(function() {
             const totalprice = document.getElementById('total');
@@ -451,25 +450,28 @@
         ////////////// generating payment method id ////////////////////////////////////////
         document.getElementById('submit-payment').addEventListener('click', function(event) {
             event.preventDefault();
-
+            const name = document.getElementById('c_fname');
+            const zip = document.getElementById('zip');
+            const home = document.getElementById('c_address');
+            const state = document.getElementById('c_state_country');
+            const country = document.getElementById('c_country');
             // Create a Payment Method using Stripe.js
             stripe.createPaymentMethod({
                 type: 'card',
                 card: cardElement,
                 billing_details: {
-                    name: 'Customer Name',
+                    name: name,
                     address: {
-                        line1: '123 Main Street',
-                        city: 'City',
-                        state: 'State',
-                        postal_code: 'ZIP',
-                        country: 'IN'
+                        line1: home,
+                        state: state,
+                        postal_code: zip,
+                        country: country
                     }
                 }
             }).then(function(result) {
                 if (result.error) {
 
-                    console.log(result.error.message);
+                    alert(result.error.message);
                 } else {
                     //   alert(result.paymentMethod.name);
                     var paymentMethodId = result.paymentMethod.id;

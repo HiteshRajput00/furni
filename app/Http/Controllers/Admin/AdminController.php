@@ -15,11 +15,12 @@ class AdminController extends Controller
 {
     public function home()
     {
-        $data = Products::count();
+    
         $userCount = DB::table('users')->where('role', 'user')->count();
         $orders = Order::all();
         foreach($orders as $od){
             $price[] =$od->totalamount;
+            $data[] =array_sum(explode(',', $od->variation_qty)); 
         }
         $lastMonthEarnings = Order::whereBetween('created_at', [
             now()->startOfMonth(),

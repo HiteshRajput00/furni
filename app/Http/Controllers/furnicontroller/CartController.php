@@ -30,6 +30,7 @@ class CartController extends Controller
                 $data->save();
             } else {
                 foreach ($p as $v) {
+                    if($v->stock>=1){
                     if ($v->variationID !== $variation->id) {
                         $data = new Cart();
                         $data->userID = Auth::user()->id;
@@ -42,6 +43,7 @@ class CartController extends Controller
                             'quantity' => $u->quantity + 1,
                         ]);
                     }
+                }
                 }
             
         }

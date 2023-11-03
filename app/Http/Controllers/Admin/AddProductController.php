@@ -13,19 +13,15 @@ class AddProductController extends Controller
 {
     public function add()
     {
-       
-      
         $colours = Colour::all();
         $materials = Material::all();
-     
         $furnitures = Furniture::all();
         return view('admin.product.add', compact('colours', 'furnitures', 'materials'));
     }
-    //add function save
+  /////////////// add processs  ////////////////////////////
     public function save(Request $request)
     {
-        // dd($request->all());
-        $request->validate([
+       $request->validate([
             'product' => 'required',
             'category' => 'required',
             'type' => 'required',
@@ -57,7 +53,7 @@ class AddProductController extends Controller
                 $var->price = $request->price[$i];
                 $var->colourID = $request->colour[$i];
                 $var->materialID = $request->material[$i];
-                $var->sizeID = $request->size[$i];
+                $var->size = $request->size[$i];
                 $var->stock = $request->stock[$i];
                 $var->save();
             }
@@ -79,15 +75,14 @@ class AddProductController extends Controller
                 $variation->price = $request->price[$v];
                 $variation->colourID = $request->colour[$v];
                 $variation->materialID = $request->material[$v];
-                $variation->sizeID = $request->size[$v];
+                $variation->size = $request->size[$v];
                 $variation->stock = $request->stock[$v];
                 $variation->save();
             }
         }
         return redirect('/list')->with('success', 'product has been added');
     }
-
-     //list function
+    
      public function list()
      {
          $products = variation::with('products')->paginate(50);

@@ -3,7 +3,7 @@
     <!-- Start Contact Form -->
     <div class="untree_co-section">
         <div class="container">
-
+            <?php $data = App\Models\SiteMeta::class::first(); ?>
             <div class="block">
                 <div class="row justify-content-center">
 
@@ -39,7 +39,7 @@
                                         </svg>
                                     </div> <!-- /.icon -->
                                     <div class="service-contents">
-                                        <p>info@yourdomain.com</p>
+                                        <p>{{ $data->support_email }}</p>
                                     </div> <!-- /.service-contents-->
                                 </div> <!-- /.service -->
                             </div>
@@ -55,7 +55,7 @@
                                         </svg>
                                     </div> <!-- /.icon -->
                                     <div class="service-contents">
-                                        <p>+1 294 3925 3939</p>
+                                        <p>{{ $data->support_phone }}</p>
                                     </div> <!-- /.service-contents-->
                                 </div> <!-- /.service -->
                             </div>
