@@ -8,7 +8,7 @@
                         <div class="card-body">
                             <h3 class="card-title text-white">total Products </h3>
                             <div class="d-inline-block">
-                                <h2 class="text-white"> {{ $data }}</h2>
+                                <h2 class="text-white"> {{ array_sum($data) }}</h2>
                                 <p id="p3" class="text-white mb-0">
                                     {{ now()->format('Y-m-d') }}
                                 </p>
@@ -209,6 +209,7 @@
                         <div class="card-body">
                             <div class="active-member">
                                 <div class="table-responsive">
+                                    <h2 > Payment Details</h2>
                                     <table class="table table-xs mb-0">
                                         <thead>
                                             <tr>

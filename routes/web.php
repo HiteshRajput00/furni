@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\furnicontroller\checkoutcontroller;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\editProductController;
+use App\Http\Controllers\Admin\SitemetaController;
 use App\Http\Controllers\furnicontroller\ProductController;
 use App\Http\Controllers\furnicontroller\usercontroller;
 use App\Http\Controllers\furnicontroller\WishlistController;
@@ -62,6 +63,11 @@ Route::group(['middleware' =>  'Admin'], function () {
   Route::get('/editblog/{id}', [Blogcontroller::class, 'editblog'])->name('editblog');
   Route::post('/updateblog/{id}', [Blogcontroller::class, 'updateblog'])->name('updateblog');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////// Site Information //////////////////////////////////////
+Route::get('/site-metas',[SitemetaController::class, 'SiteMeta']);
+Route::post('/addsiteinfo',[SitemetaController::class, 'addprocess']);
+/////////////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////// product routes  ///////////////////////////
   Route::get('/add', [AddProductController::class, 'add']);

@@ -44,7 +44,7 @@
         Preloader end
     ********************-->
 
-
+   
     <!--**********************************
         Main wrapper start
     ***********************************-->
@@ -165,6 +165,14 @@
                                 <li><a href="/bloglist"> Blog List</a></li>
                              
                             </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <span class="nav-text"> siteInfo</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a href="/site-metas">SiteMetas</a></li>
+                           </ul>
                         </li>
                         <li class="mega-menu mega-menu-sm">
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">

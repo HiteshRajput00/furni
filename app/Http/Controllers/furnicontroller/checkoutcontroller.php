@@ -18,6 +18,7 @@ class checkoutcontroller extends Controller
     ///////////////////checkout function  ///////////////////////////////
     public function checkout()
     {
+       
         $carts = Cart::where('userID', Auth::user()->id)->get();
         $address = BillingDetails::where('userID', Auth::user()->id)->get();
         if ($carts->isEmpty()) {
@@ -99,13 +100,12 @@ class checkoutcontroller extends Controller
         $price = $request->total;
 
         ////////////// making payment by stripe  ////////////////
-
+        try {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         $stripeCustomer = $stripe->customers->create([
-            'name' => 'test',
+            'name' => $request->fname,
             'email' => $request->email,
             'address' => [
-                'city' => 'abcd',
                 'postal_code' => $request->zip,
                 'state' => $request->statecountry,
                 'country' => $request->country,
@@ -135,16 +135,14 @@ class checkoutcontroller extends Controller
             $order->status = 1;
             $payment = new Payment();
             $payment->orderNUM = $orderNumber;
-            $payment->total_amount = $paymentIntentObject->amount;
+            $payment->total_amount = $price;
             $payment->status = 1;
             $payment->save();
-        } else {
-            $order->status = 0;
-        }
-        $order->save();
 
-        //////////// removing product from  cart ////////////////////////
+            $order->save();
 
+
+ //////////// removing product from  cart ////////////////////////
         $cart = Cart::where('userID', Auth::user()->id)->get();
         foreach ($cart as $c) {
             $product = Variation::find($c->variationID);
@@ -158,5 +156,17 @@ class checkoutcontroller extends Controller
         }
 
         return view('furni.checkout.thankyou');
+        } else {
+            $order->status = 0;
+            $order->save();
+            return view('furni.checkout.Payment_Failed');
+        }
+       
     }
+ catch (\Stripe\Exception\CardException $e) {
+    $error = $e->getError();
+    $errorMessage = $error->message;
+    return view('furni.checkout.Payment_Failed', ['errorMessage' => $errorMessage]);
+} 
+}
 }
