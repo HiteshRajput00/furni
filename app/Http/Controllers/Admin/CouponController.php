@@ -16,14 +16,11 @@ class CouponController extends Controller
     }
     public function savecoupon(Request $req)
     {
-        // dd($req->all());
+     
         $data = new Coupon();
         $data->name = $req->couponname;
         $data->code = $req->couponcode;
-      
         $data->value = $req->value;
-       
-            
         $data->status = 1;
         $data->expiredate = $req->expiredate;
         $data->save();

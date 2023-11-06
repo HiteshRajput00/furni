@@ -118,6 +118,8 @@ Route::group(['middleware' => 'Auth'], function () {
   /////////////////////////////// checkout routes //////////////////////////////////////////////////////
   Route::get('/checkout', [checkoutcontroller::class, 'checkout'])->name('checkout');
   Route::post('/paymentprocess',[checkoutcontroller::class,'testpayment']);
+  Route::get('/payment-success{id}',[checkoutcontroller::class,'paymentsuccess'])->name('payment-success');
+  Route::post('/handle-3d-secure',[checkoutcontroller::class,'requestHandle'])->name('handle-3d-secure');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////  apply remove  coupon  ///////////////////////////////////////

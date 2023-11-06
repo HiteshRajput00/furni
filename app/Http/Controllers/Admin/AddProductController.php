@@ -37,7 +37,10 @@ class AddProductController extends Controller
         $data->typeID = $request->type;
         $data->save();
         $product_id = $data->id;
+
+      ///////////////// if product type variable //////////////////////////////
         if ($request->type == 2) {
+//////////////// storing array of images//////////////////////////////////////
             if ($images = $request->file('image')) {
                 foreach ($images as $image) {
                     $file = $image;
@@ -57,6 +60,7 @@ class AddProductController extends Controller
                 $var->stock = $request->stock[$i];
                 $var->save();
             }
+        //////////////////////product type simple ///////////////////////////
         } elseif ($request->type == 1) {
             if ($image = $request->File('image')) {
                 foreach ($image as $img) {
