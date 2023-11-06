@@ -122,16 +122,24 @@ class checkoutcontroller extends Controller
             'payment_method_types' => ['card'],
             'payment_method' => $paymentMethodId,
             'metadata' => ['order_id' => $orderNumber],
-            'capture_method' => 'automatic',
-            'confirm' => true,
-            'off_session' => true,
+            'capture_method' => 'manual',
+            // 'confirm' => true,
+            // 'off_session' => true,
             'description' => 'product purchased',
         ]);
 
-
+        //   echo $paymentIntentObject->status;
+        //   die();
         ///////////////// checking payment done or not //////////////////
+        $clientsecret = $paymentIntentObject->client_secret;
+        $ordernum = $orderNumber;
+      
+        if ($paymentIntentObject->status === 'requires_confirmation') {
+            $order->status = 0;
+            $order->save();
+            return view('furni.checkout.Handle_request', compact('clientsecret','ordernum'));
 
-        if ($paymentIntentObject->status === 'succeeded') {
+        }elseif ($paymentIntentObject->status === 'succeeded') {
             $order->status = 1;
             $payment = new Payment();
             $payment->orderNUM = $orderNumber;
@@ -166,7 +174,42 @@ class checkoutcontroller extends Controller
  catch (\Stripe\Exception\CardException $e) {
     $error = $e->getError();
     $errorMessage = $error->message;
-    return view('furni.checkout.Payment_Failed', ['errorMessage' => $errorMessage]);
+    echo $errorMessage;
+    die();
+    // return view('furni.checkout.Payment_Failed', ['errorMessage' => $errorMessage]);
 } 
+}
+
+public function paymentsuccess($id){
+    // $id = $req->input('id');
+    // dd($id);
+    
+    $order = Order::where('orderNUM',$id);
+    foreach($order as $o){
+    $payment = new Payment();
+    $payment->orderNUM = $o->ordernum;
+    $payment->total_amount = $o->totalamount;
+    $payment->status = 1;
+    $payment->save();
+
+    $o->update(['status' => 1]);
+}
+
+
+//////////// removing product from  cart ////////////////////////
+$cart = Cart::where('userID', Auth::user()->id)->get();
+foreach ($cart as $c) {
+    $product = Variation::find($c->variationID);
+    $stock = $product->stock - $c->quantity;
+    if ($stock == 0) {
+        $product->update(['status' => 0]);
+    } else {
+        $product->update(['stock' => $stock]);
+    }
+    $c->delete();
+}
+
+
+    return view('furni.checkout.thankyou');
 }
 }

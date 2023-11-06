@@ -32,9 +32,6 @@ class AdminController extends Controller
             now()->startOfMonth(),
             now()->endOfMonth()  
         ])->get();
-
-        // $customers = BillingDetails::with('Orders')->get();
-         //dd($data);
         return view('admin.Dashboard.index', compact('data','orders', 'userCount','price','lastMonthEarnings','lastMonthOrder'));
     }
    
@@ -46,7 +43,8 @@ class AdminController extends Controller
     public function register(){
         return view('admin.user.register');
     }
-
+ 
+////////////////////////register user ///////////////////////////////
     public function store(Request $request){
         $request->validate([   
             'email' => 'required|email|unique:users|max:255',
@@ -65,7 +63,8 @@ class AdminController extends Controller
      $user->save();
      return redirect('/furni/login');
     }
-//login function
+
+////////////////////login function////////////////////////////////////
     public function log(Request $request){
         $credentials = $request->only('email', 'password');
         if(Auth::attempt($credentials)){
@@ -75,19 +74,21 @@ class AdminController extends Controller
         return back()->with('msg','please enter valid details');
 
     }
-  
-    public function profile(){
-       
-        $users = User::where('role','user')->get();
-        
-        return view('admin.profile.index',compact('users'));
-    }
-  
+  ////////////////////////////////////////////////////////////
+    
+    ///////////////////////////logout user//////////////////////////////
         public function adminlogout(){
              Auth::logout();
             return redirect('/');
         }
- 
+    //////////////////////////////////////////////////
+        public function profile(){
+       
+            $users = User::where('role','user')->get();
+            
+            return view('admin.profile.index',compact('users'));
+        }
+   
         public function orders(){
             $orders = Order::all();
             return view('admin.details.orders', compact('orders'));

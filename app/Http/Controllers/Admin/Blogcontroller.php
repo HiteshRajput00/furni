@@ -11,6 +11,7 @@ class Blogcontroller extends Controller
         return view('admin.blogs.addblog');
     }
 
+    ///////////////////////////////save blog ////////////////////////////
     public function saveblog(Request $request){
         // dd($request->all());
         $request->validate([
@@ -43,6 +44,7 @@ class Blogcontroller extends Controller
         return view('admin.blogs.bloglist', compact('blogs'));
     }
 
+    //////////////////////delete and edit blog /////////////////////////////////////
     public function blogdelete($id){
         $blog = Blog::find($id);
         $blog->delete();
@@ -55,6 +57,7 @@ class Blogcontroller extends Controller
 
     }
 
+//////////////////////////Update blog ////////////////////////////////////////////
     public function updateblog(Request $request, $id){
         $blog = Blog::find($id);
         if($request->hasFile('image')){

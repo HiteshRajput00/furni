@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 class editProductController extends Controller
 {
-    //delete function
+    ////////////////delete product ////////////////////////////
     public function del($id)
     {
         $carts = Cart::where('productID', $id);
@@ -82,7 +82,7 @@ class editProductController extends Controller
         }
         // return redirect('/list');
     }
-    //edit variation function
+   /////////// //edit variation function///////////////////////////////
     public function editvariation($vID)
     {
         $data = Variation::find($vID);
