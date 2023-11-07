@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\furnicontroller;
+
+
 use App\Http\Controllers\Controller;
 use App\Mail\messagemail;
 use App\Models\Blog;
 use App\Models\Furniture;
 use App\Models\Products;
 use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -49,7 +52,9 @@ class usercontroller extends Controller
         $data->password = $request->password;
         $data->number = $request->number;
         $data->save();
-        return redirect('/');
+      
+        // return redirect('/');
+       
     }
     //index 
     public function index()

@@ -13,7 +13,10 @@ use App\Http\Controllers\Admin\SitemetaController;
 use App\Http\Controllers\furnicontroller\ProductController;
 use App\Http\Controllers\furnicontroller\usercontroller;
 use App\Http\Controllers\furnicontroller\WishlistController;
+use App\Mail\messagemail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestEmail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,6 +140,13 @@ Route::get('/display', [Productcontroller::class, 'display'])->name('display');
 Route::get('/search', [Productcontroller::class, 'search'])->name('search');
 ////////////////////////////////////////////////////////////////////////
 
+
+////////////////////////////////// test mail ///////////////////////////////////
+Route::get('/send-test-email', function () {
+  Mail::to('hit8708542@gmail.com')->send(new messagemail('hi'));
+  return 'Test email sent.';
+});
+//////////////////////////////////////////////////////////////////////
 
 
 

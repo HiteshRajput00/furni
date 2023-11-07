@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\BillingDetails;
+
 use App\Models\Order;
-use App\Models\Products;
+use App\Events\SiteChanges;
+use App\Models\Payment;
+use Illuminate\Console\Scheduling\Event;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,20 +22,22 @@ class AdminController extends Controller
         $userCount = DB::table('users')->where('role', 'user')->count();
         $orders = Order::all();
         foreach($orders as $od){
-            $price[] =$od->totalamount;
+          
             $data[] =array_sum(explode(',', $od->variation_qty)); 
         }
+        $price = Payment::sum('total_amount');
+        
         $lastMonthEarnings = Order::whereBetween('created_at', [
             now()->startOfMonth(),
             now()->endOfMonth()    
         ])->sum('totalamount');
 
-        $lastMonthOrder = Order::whereBetween('created_at',
+        $lastMonthOrder = Order::where('status','1')->whereBetween('created_at',
         [
             now()->startOfMonth(),
             now()->endOfMonth()  
         ])->get();
-        return view('admin.Dashboard.index', compact('data','orders', 'userCount','price','lastMonthEarnings','lastMonthOrder'));
+        return view('admin.Dashboard.index', compact('data','orders', 'userCount','price','lastMonthEarnings','lastMonthOrder','SiteChanges'));
     }
    
     public function index(){
@@ -61,6 +66,11 @@ class AdminController extends Controller
      $user->password = $request->password;
      $user->number = $request->number;
      $user->save();
+     event(new SiteChanges($user));
+    //  Event::assertDispatched(SiteChanges::class, function ($e) use ($user) {
+    //      echo $e->data->id === $user->id;
+    //     //  die();
+    //  });
      return redirect('/furni/login');
     }
 

@@ -24,6 +24,15 @@
         href="{{ asset('/admin/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('/admin/css/style.css') }}" rel="stylesheet">
+    {{-- <!------------  ngrok links ---------------------------------->
+
+    <link href="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet"
+        href="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <!-- Custom Stylesheet -->
+    <link href="https://1834-124-253-82-196.ngrok-free.app/admin/css/style.css" rel="stylesheet"> --}}
 
 </head>
 
@@ -237,6 +246,32 @@
     <script src="{{ url('/admin/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
     <script src="{{ url('/admin/js/dashboard/dashboard-1.js') }}"></script>
 
+
+    {{-- <!------------------------------------------------------------------------------>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/common/common.min.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/js/custom.min.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/js/settings.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/js/gleek.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/js/styleSwitcher.js"></script>
+
+    <!-- Chartjs -->
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/chart.js/Chart.bundle.min.js"></script>
+    <!-- Circle progress -->
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/circle-progress/circle-progress.min.js"></script>
+    <!-- Datamap -->
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/d3v3/index.js') }}"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/topojson/topojson.min.js') }}"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/datamaps/datamaps.world.min.js"></script>
+    <!-- Morrisjs -->
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/raphael/raphael.min.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/morris/morris.min.js"></script>
+    <!-- Pignose Calender -->
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/moment/moment.min.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <!-- ChartistJS -->
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/chartist/js/chartist.min.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    <script src="https://1834-124-253-82-196.ngrok-free.app/admin/js/dashboard/dashboard-1.js"></script> --}}
 </body>
 
 </html>

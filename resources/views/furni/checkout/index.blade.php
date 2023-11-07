@@ -84,8 +84,9 @@
                                     <div class="form-group">
                                         <label for="test1" class="text-black" data-bs-toggle="collapse"
                                             href="#{{ $addr->companyname }}" role="button" aria-expanded="false"
-                                            aria-controls="{{ $addr->companyname }}"><input  type="radio" value="{{ $addr->id }}"
-                                                name="Useraddress" id="test1"><strong style="font-size: 22px">
+                                            aria-controls="{{ $addr->companyname }}"><input type="radio"
+                                                value="{{ $addr->id }}" name="Useraddress" id="test1"><strong
+                                                style="font-size: 22px">
                                                 {{ $addr->companyname }}
                                                 &nbsp;{{ $addr->street }},houseNO. {{ $addr->houseNO }}</strong></label>
                                         <div class="collapse" id="{{ $addr->companyname }}">
@@ -179,8 +180,8 @@
                                 <div class="form-group">
                                     <label for="test2" class="text-black" data-bs-toggle="collapse"
                                         href="#ship_different_address" role="button" aria-expanded="false"
-                                        aria-controls="ship_different_address"><input type="radio" name="Useraddress" value=""
-                                             id="test2"> <strong style="font-size: 22px">Deliver To
+                                        aria-controls="ship_different_address"><input type="radio" name="Useraddress"
+                                            value="" id="test2"> <strong style="font-size: 22px">Deliver To
                                             A Different Address?</strong></label>
                                     <div class="collapse" id="ship_different_address">
                                         <div class="py-2">
@@ -264,7 +265,19 @@
                                     </div>
                                 </div>
                             @endif
+                            <div class="text text-danger">
+                                @error('Useraddress')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+                            <div class="text text-danger">
+                                @error('fname')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+
                         </div>
+
 
                     </div>
                     <div class="col-md-6">
@@ -326,9 +339,11 @@
                                                         value="{{ $cart->productID }}">
                                                     <input type="hidden" id="variation" name="productvariation[]"
                                                         value="{{ $cart->variationID }}">
-                                                        <input type="hidden" id="variation_qty" name="variation_qty[]"
+                                                    <input type="hidden" id="variation_qty" name="variation_qty[]"
                                                         value="{{ $cart->quantity }}">
                                                 @endforeach
+                                                <input type="hidden" id="subtotal" name="subtotal"
+                                                    value="{{ array_sum($data) }}">
                                             @endif
                                             <tr>
                                                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong>
@@ -352,17 +367,16 @@
                                     </table>
 
 
-                                    <input type="hidden" id="subtotal" name="subtotal"
-                                        value="{{ array_sum($data) }}">
+
                                     <input type="hidden" id="inputtotal" name="total" value="{{ $total }}">
 
 
                                     <div class="border p-3 mb-5">
                                         <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse"
-                                                href="#collapsepaypal" role="button" aria-expanded="false"
+                                                href="#collapseCard" role="button" aria-expanded="false"
                                                 aria-controls="collapsepaypal">By Card</a>
                                         </h3>
-                                        <div class="collapse" id="collapsepaypal">
+                                        <div class="collapse" id="collapseCard">
                                             <br>
                                             <div class="form-group">
                                                 <label for="card-element">Card Holder Name</label>

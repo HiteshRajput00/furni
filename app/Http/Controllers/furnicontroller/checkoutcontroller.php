@@ -13,12 +13,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Variation;
 
+use Stripe\Webhook;
+
 class checkoutcontroller extends Controller
 {
     ///////////////////checkout function  ///////////////////////////////
     public function checkout()
     {
-       
+
         $carts = Cart::where('userID', Auth::user()->id)->get();
         $address = BillingDetails::where('userID', Auth::user()->id)->get();
         if ($carts->isEmpty()) {
@@ -42,12 +44,32 @@ class checkoutcontroller extends Controller
 
 
 
-    //////////// place  order  with payment  function //////////////
+    //////////// place  order  with payment //////////////
     public function testpayment(Request $request)
     {
-        //   dd($request->all());
+        if ($request->input('Useraddress') !== null) {
+            $request->validate([
+                'Useraddress' => 'required',
+            ]);
+        } elseif ($request->input('fname') !== null) {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|',
+                'phone' => 'required',
+                'address' => 'required',
+                'house' => 'required',
+                'statecountry' => 'required',
+                'zip' => 'required',
+            ]);
+        } else {
+            $request->validate([
+                'Useraddress' => 'required',
+            ]);
+        }
+
         /////////// saving address ///////////////////
-        $addr =  $request->input('Useraddress');
+        $addr = $request->input('Useraddress');
+
         if ($addr === null) {
             $rec = new BillingDetails();
             $rec->userID = Auth::user()->id;
@@ -65,7 +87,7 @@ class checkoutcontroller extends Controller
             $addr_ID = $addr;
         }
 
-        ////////////// order details //////////////
+        //////////////// order details /////////////////////////
         $products = implode(",", $request->cartsproduct);
         $productvariation = implode(",", $request->productvariation);
         $variation_qty = implode(",", $request->variation_qty);
@@ -77,7 +99,7 @@ class checkoutcontroller extends Controller
         $order->productID = $products;
         $order->productvariation = $productvariation;
         $order->variation_qty = $variation_qty;
-        
+
         //////////// checking coupon /////////////////////
         if ($request->code === null) {
             $order->coupon = 0;
@@ -92,6 +114,8 @@ class checkoutcontroller extends Controller
         } else {
             $order->billing_detailsID = $addr;
         }
+
+        ////////////////////// finding Discount ///////////////////////
         $dis = $request->subtotal - $request->total;
         $order->discount = $dis;
         $order->totalamount = $request->total;
@@ -99,58 +123,102 @@ class checkoutcontroller extends Controller
 
         $price = $request->total;
 
-        ////////////// making payment by stripe  ////////////////
+        ///////////////// making payment by stripe  /////////////////////
         try {
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-        $stripeCustomer = $stripe->customers->create([
-            'name' => $request->fname,
-            'email' => $request->email,
-            'address' => [
-                'postal_code' => $request->zip,
-                'state' => $request->statecountry,
-                'country' => $request->country,
-            ],
-            'payment_method' =>  $request->token,
-        ]);
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+            $stripeCustomer = $stripe->customers->create([
+                'name' => $request->fname,
+                'email' => $request->email,
+                'address' => [
+                    'postal_code' => $request->zip,
+                    'state' => $request->statecountry,
+                    'country' => $request->country,
+                ],
+                'payment_method' => $request->token,
+            ]);
 
-        $paymentMethodId = $request->token;
+            $paymentMethodId = $request->token;
 
-        $paymentIntentObject = $stripe->paymentIntents->create([
-            'amount' => (int)$price * 100,
-            'currency' => 'inr',
-            'customer' => $stripeCustomer->id,
-            'payment_method_types' => ['card'],
-            'payment_method' => $paymentMethodId,
-            'metadata' => ['order_id' => $orderNumber],
-            'capture_method' => 'manual',
-            // 'confirm' => true,
-            // 'off_session' => true,
-            'description' => 'product purchased',
-        ]);
+            $paymentIntentObject = $stripe->paymentIntents->create([
+                'amount' => (int) $price * 100,
+                'currency' => 'inr',
+                'customer' => $stripeCustomer->id,
+                'payment_method_types' => ['card'],
+                'payment_method' => $paymentMethodId,
+                'metadata' => ['order_id' => $orderNumber],
+                'capture_method' => 'manual',
+                // 'confirm' => true,
+                // 'off_session' => true,
+                'description' => 'product purchased',
+            ]);
 
-        //   echo $paymentIntentObject->status;
-        //   die();
-        ///////////////// checking payment done or not //////////////////
-        $clientsecret = $paymentIntentObject->client_secret;
-        $ordernum = $orderNumber;
-      
-        if ($paymentIntentObject->status === 'requires_confirmation') {
-            $order->status = 0;
-            $order->save();
-            return view('furni.checkout.Handle_request', compact('clientsecret','ordernum'));
+            ///////////////// checking payment status //////////////////
+            $clientsecret = $paymentIntentObject->client_secret;
+            $ordernum = $orderNumber;
 
-        }elseif ($paymentIntentObject->status === 'succeeded') {
-            $order->status = 1;
-            $payment = new Payment();
-            $payment->orderNUM = $orderNumber;
-            $payment->total_amount = $price;
-            $payment->status = 1;
-            $payment->save();
+            if ($paymentIntentObject->status === 'requires_confirmation') {
+                $order->status = 0;
+                $payment = new Payment();
+                $payment->orderNUM = $orderNumber;
+                $payment->total_amount = $price;
+                $payment->status = 0;
+                $payment->save();
+                $order->save();
+                return view('furni.checkout.Handle_request', compact('clientsecret', 'ordernum'));
 
-            $order->save();
+            } elseif ($paymentIntentObject->status === 'succeeded') {
+                $order->status = 1;
+                $order->save();
+
+                ////////////// Payment data ///////////////////////
+                $payment = new Payment();
+                $payment->orderNUM = $orderNumber;
+                $payment->total_amount = $price;
+                $payment->status = 1;
+                $payment->save();
+
+                //////////// removing product from  cart ////////////////////////
+                $cart = Cart::where('userID', Auth::user()->id)->get();
+                foreach ($cart as $c) {
+                    $product = Variation::find($c->variationID);
+                    $stock = $product->stock - $c->quantity;
+                    if ($stock == 0) {
+                        $product->update(['status' => 0]);
+                    } else {
+                        $product->update(['stock' => $stock]);
+                    }
+                    $c->delete();
+                }
+
+                return view('furni.checkout.thankyou');
+            } else {
+                $order->status = 0;
+                $order->save();
+                return view('furni.checkout.Payment_Failed');
+            }
+
+        } catch (\Stripe\Exception\CardException $e) {
+            $error = $e->getError();
+            $errorMessage = $error->message;
+            return view('furni.checkout.Payment_Failed', ['errorMessage' => $errorMessage]);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////
 
 
- //////////// removing product from  cart ////////////////////////
+    //////////////////////////////// 3D secure User Authentication //////////////////////////////
+    public function paymentsuccess($id)
+    {
+
+        $order = Order::where('orderNUM', $id)->get();
+        foreach ($order as $o) {
+            $payment = Payment::where('orderNUM', '=', $o->orderNUM)->get();
+            foreach ($payment as $pay) {
+                $pay->update(['status' => 1]);
+            }
+            $o->update(['status' => 1]);
+        }
+        //////////// removing product from  cart ////////////////////////
         $cart = Cart::where('userID', Auth::user()->id)->get();
         foreach ($cart as $c) {
             $product = Variation::find($c->variationID);
@@ -162,54 +230,6 @@ class checkoutcontroller extends Controller
             }
             $c->delete();
         }
-
         return view('furni.checkout.thankyou');
-        } else {
-            $order->status = 0;
-            $order->save();
-            return view('furni.checkout.Payment_Failed');
-        }
-       
     }
- catch (\Stripe\Exception\CardException $e) {
-    $error = $e->getError();
-    $errorMessage = $error->message;
-    echo $errorMessage;
-    die();
-    // return view('furni.checkout.Payment_Failed', ['errorMessage' => $errorMessage]);
-} 
-}
-
-public function paymentsuccess($id){
-    // $id = $req->input('id');
-    // dd($id);
-    
-    $order = Order::where('orderNUM',$id);
-    foreach($order as $o){
-    $payment = new Payment();
-    $payment->orderNUM = $o->ordernum;
-    $payment->total_amount = $o->totalamount;
-    $payment->status = 1;
-    $payment->save();
-
-    $o->update(['status' => 1]);
-}
-
-
-//////////// removing product from  cart ////////////////////////
-$cart = Cart::where('userID', Auth::user()->id)->get();
-foreach ($cart as $c) {
-    $product = Variation::find($c->variationID);
-    $stock = $product->stock - $c->quantity;
-    if ($stock == 0) {
-        $product->update(['status' => 0]);
-    } else {
-        $product->update(['stock' => $stock]);
-    }
-    $c->delete();
-}
-
-
-    return view('furni.checkout.thankyou');
-}
 }

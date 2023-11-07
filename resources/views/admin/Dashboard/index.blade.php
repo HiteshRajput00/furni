@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h3 class="card-title text-white">Net Profit</h3>
                             <div class="d-inline-block">
-                                <h2 class="text-white">$ {{ array_sum($price) }}</h2>
+                                <h2 class="text-white">$ {{ $price }}</h2>
                                 <p id="p3" class="text-white mb-0">
                                     {{ now()->format('Y-m-d') }}
                                 </p>
@@ -55,11 +55,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body pb-0 d-flex justify-content-between">
-                                    <div>
-                                        <h4 class="mb-1">Product Sales</h4>
-                                        <p>Total Earnings of the Month</p>
-                                        <h3 class="m-0">$ {{ $lastMonthEarnings }}</h3>
-                                    </div>
+                                    
                                     <div>
                                         <ul>
                                            
@@ -72,15 +68,12 @@
                                 <table class="table ">
                                     <thead>
                                         <tr>
-
                                             <th scope="col">OrderNO</th>
                                             <th scope="col">product</th>
                                             <th scope="">quantity</th>
                                             <th scope="col">coupon</th>
                                             <th scope="col">Discount</th>
                                             <th scope="col">total price</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -129,9 +122,17 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Products Summary</h4>
+                            <h4 class="card-title">Payment Summary</h4>
                             <div id="morris-bar-chart">
-
+                                <div>
+                                    <h4 class="mb-1">Product Sales</h4>
+                                    <p>Total Earnings of the Month</p>
+                                    <h4 class="m-0">Total Amount  =  ${{ $lastMonthEarnings }}</h4>
+                                    <br>
+                                    <h4 class="m-0">Recived Amount  =  ${{ $price }}</h4>
+                                    <br>
+                                    <h4 class="m-0">Pending Amount  =   ${{ $lastMonthEarnings - $price }}</h4>
+                                </div>
                              
                             </div>
                         </div>
@@ -282,4 +283,10 @@
                 </div>
             </div>
         </div>
+        <script>
+            Echo.channel('furni-laravel')
+    .listen('SiteChanges', (event) => {
+        console.log(event);
+    });
+        </script>
     @endsection

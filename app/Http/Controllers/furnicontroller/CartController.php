@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\furnicontroller;
 
+use App\Events\SiteChanges;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -10,12 +11,13 @@ use App\Models\Coupon;
 use App\Models\Variation;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
     // cart function
-    public function addcart($cid)
+    public function addcart( $cid)
     {
         $variation = Variation::find( $cid);
         
@@ -47,6 +49,9 @@ class CartController extends Controller
                 }
             
         }
+        
+      
+
         return redirect('/showcart');
     }
     //showcart function
@@ -83,12 +88,12 @@ class CartController extends Controller
 
       //delete from cart 
       public function deleteCart(Request $request){
+       
+
         $ID = $request->input('id');
        $cart = Cart::find($ID);
        $carts = Cart::all();
-    //    foreach($carts as  $c){
-    //     $total[] = $c->total_price * $c->quantity;
-    //    }
+  
         if($cart->quantity>=2){
             $cart->update(['quantity'=>$cart->quantity - 1,]);
               
@@ -103,9 +108,7 @@ class CartController extends Controller
 
     public function changeCart(Request $request){
         $ID = $request->input('id');
-        // return $ID;
         $cart = Cart::find($ID);
-        // return $cart;
         $cart->update(['quantity'=>$cart->quantity+1]);
         $newqty = $cart->quantity ;
         return response()->json(['data'=>$newqty]);

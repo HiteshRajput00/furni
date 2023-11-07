@@ -21,7 +21,6 @@ class messagemail extends Mailable
     public function build()
     {
         return $this->view('furni.mail.index')
-            ->from($this->data['email'])
             ->subject('New Contact Message');
     }
     use Queueable, SerializesModels;

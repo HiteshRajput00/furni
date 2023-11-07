@@ -249,7 +249,7 @@
             inputElement2.setAttribute("class", "form-control")
             inputElement2.setAttribute("placeholder", "Enter stock")
             inputElement2.setAttribute("name", "stock[]");
-            inputElement2.setAttribute("id", "input2");
+            inputElement2.setAttribute("id", "stock");
             var selectContainer = document.getElementById("display");
             selectContainer.appendChild(inputElement2);
             selectContainer.appendChild(sdiv);
@@ -282,8 +282,8 @@
             label2.remove();
             const label3 = document.getElementById("label3");
             label3.remove();
-            const div = document.getElementById("input2");
-            div.remove();
+            const stock = document.getElementById("stock");
+            stock.remove();
          
             const delbtn = document.getElementById("delbtn");
             delbtn.remove();

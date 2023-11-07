@@ -328,7 +328,10 @@
         </div>
     </div>
     <!-- End Blog Section -->
+   
+
     <script>
+   
         function showSweetAlert() {
             Swal.fire({
                 title: 'Hello, SweetAlert!',

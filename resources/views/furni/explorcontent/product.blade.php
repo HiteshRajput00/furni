@@ -19,9 +19,29 @@
                             <div class="card-body p-0">
                                 <ul class="list-group list-group-flush rounded-3">
                                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                       
+
 
                                         <h4>{{ $products->product }}</h4>
+                                  
+                                   
+                                        @if (Auth::user())
+                                            <?php $wishlist = App\Models\Wishlist::class::where('variationID', $v->id)
+                                       ->where('userID', Auth::user()->id)->get();?>
+                                            @if ($wishlist->isEmpty())
+                                                <a type="button" class="load-button" data-status="add"
+                                                    data-id="{{ $v->id }}"><img height="30px" width="30px"
+                                                        id="{{ $v->id }}"
+                                                        src="{{ url('/asset/images/love.png') }}"></a>
+                                            @else
+                                                <a type="button" class="remove" data-status="remove"
+                                                    data-id="{{ $v->id }}"><img height="30px" width="30px"
+                                                        id="{{ $v->id }}"
+                                                        src="{{ url('/asset/images/filllove.png') }}"></a>
+                                            @endif
+                                        @else
+                                            <a id="load-page-button" href="/furni/login"><img height="30px" width="30px"
+                                                    id="{{ $v->id }}" src="{{ url('/asset/images/love.png') }}"></a>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
@@ -76,22 +96,10 @@
                                         <a class="btn" id="load-page-button"
                                             href="{{ route('shop.addcart', ['id' => $v->id]) }}">add to cart</a>
                                         <hr>
-                                       <?php $wishlist = App\Models\Wishlist::class::where('variationID', $v->id)
-                                       ->where('userID', Auth::user()->id)->get();?>
-                                        @if ($wishlist->isEmpty())
-                                            <button type="button" class="load-button" data-status="add"
-                                                data-id="{{ $v->id }}"><img height="30px" width="30px"
-                                                    id="{{ $v->id }}" src="{{ url('/asset/images/love.png') }}"></button>
-                                        @else
-                                            <button type="button" class="remove" data-status="remove"
-                                                data-id="{{ $v->id }}"><img height="30px" width="30px"
-                                                    id="{{ $v->id }}" src="{{ url('/asset/images/filllove.png') }}"></button>
-                                        @endif
+                                       
                                     @else
                                         <a class="btn" id="load-page-button" href="/furni/login">add to cart</a>
-                                        <hr>
-                                        <a id="load-page-button" href="/furni/login"><img height="30px" width="30px"
-                                                id="{{ $v->id }}" src="{{ url('/asset/images/love.png') }}"></a>
+                                     
                                     @endif
                                 @endif
                             </div>
@@ -112,7 +120,7 @@
                 var status = $(this).data("status");
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
-                    url: "{{ route('addwishlist') }}",
+                    url: "https://1834-124-253-82-196.ngrok-free.app/addwishlist",
                     type: 'POST',
                     data: {
                         productid: ID,
@@ -121,8 +129,8 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                     
-                        img.src= data.img;
+
+                        img.src = data.img;
                         // $("#load-button").attr('',data.btn)
                     },
                     error: function(xhr, status, error) {
@@ -139,7 +147,7 @@
                 const img = document.getElementById(ID);
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
-                    url: "{{ route('removewishlist') }}",
+                    url: "https://1834-124-253-82-196.ngrok-free.app/removewishlist",
                     type: 'POST',
                     data: {
                         productid: ID,
@@ -147,8 +155,8 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                       
-                        img.src= data.img;
+
+                        img.src = data.img;
                         // $("#remove").attr('id',data.btn)
                     },
                     error: function(xhr, status, error) {
