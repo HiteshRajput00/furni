@@ -39,8 +39,8 @@
                             <div class="d-inline-block">
                                 <h2 class="text-white">{{ $userCount }}</h2>
                                 <p id="p3" class="text-white mb-0">
-                                {{ now()->format('Y-m-d') }}
-                            </p>
+                                    {{ now()->format('Y-m-d') }}
+                                </p>
                             </div>
                             <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                         </div>
@@ -55,11 +55,12 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body pb-0 d-flex justify-content-between">
-                                    
+
                                     <div>
                                         <ul>
-                                           
-                                            <li class="d-inline-block"><a class="text-dark" href="#">{{ now()->format('Y-m-d') }}</a></li>
+
+                                            <li class="d-inline-block"><a class="text-dark"
+                                                    href="#">{{ now()->format('Y-m-d') }}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -127,13 +128,13 @@
                                 <div>
                                     <h4 class="mb-1">Product Sales</h4>
                                     <p>Total Earnings of the Month</p>
-                                    <h4 class="m-0">Total Amount  =  ${{ $lastMonthEarnings }}</h4>
+                                    <h4 class="m-0">Total Amount = ${{ $lastMonthEarnings }}</h4>
                                     <br>
-                                    <h4 class="m-0">Recived Amount  =  ${{ $price }}</h4>
+                                    <h4 class="m-0">Recived Amount = ${{ $price }}</h4>
                                     <br>
-                                    <h4 class="m-0">Pending Amount  =   ${{ $lastMonthEarnings - $price }}</h4>
+                                    <h4 class="m-0">Pending Amount = ${{ $lastMonthEarnings - $price }}</h4>
                                 </div>
-                             
+
                             </div>
                         </div>
                     </div>
@@ -210,7 +211,7 @@
                         <div class="card-body">
                             <div class="active-member">
                                 <div class="table-responsive">
-                                    <h2 > Payment Details</h2>
+                                    <h2> Payment Details</h2>
                                     <table class="table table-xs mb-0">
                                         <thead>
                                             <tr>
@@ -220,14 +221,16 @@
                                                 <th>Status</th>
                                                 <th>Payment </th>
                                                 <th>Amount </th>
-                                              
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($orders as $order)
                                                 <?php $customer = App\Models\BillingDetails::class::find($order->billing_detailsID); ?>
                                                 <tr>
-                                                    <td><strong style="font-size: 25px">{{ $customer->fname }}&nbsp;{{ $customer->lname  }}</strong></td>
+                                                    <td><strong
+                                                            style="font-size: 25px">{{ $customer->fname }}&nbsp;{{ $customer->lname }}</strong>
+                                                    </td>
                                                     <td>
 
                                                         <table>
@@ -257,23 +260,20 @@
                                                         </td>
                                                         <td><i class="fa fa-circle-o text-success  mr-2"></i> Paid</td>
                                                         <td>${{ $order->totalamount }}</td>
-                                                        @else
+                                                    @else
                                                         <td>
                                                             <div>
                                                                 <div class="progress" style="height: 6px">
-                                                                    <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                                    <div class="progress-bar bg-warning"
+                                                                        style="width: 50%"></div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td><i class="fa fa-circle-o text-warning  mr-2"></i> Pending</td>
                                                         <td>${{ $order->totalamount }}</td>
                                                     @endif
-                                                
-                                                    
                                                 </tr>
                                             @endforeach
-                                           
-                                          
                                         </tbody>
                                     </table>
                                 </div>
@@ -284,9 +284,13 @@
             </div>
         </div>
         <script>
-            Echo.channel('furni-laravel')
-    .listen('SiteChanges', (event) => {
-        console.log(event);
-    });
+            try {
+                window.Echo.PrivateChannel('furni-laravel')
+                    .listen('SiteChanges', (event) => {
+                        console.log(event);
+                    });
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
         </script>
     @endsection

@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\SiteChanges;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +24,8 @@ class notifications
     public function handle(SiteChanges $event)
     {
         $user = $event->user;
-        Log::info('User registered: ' . $user->name);
-        return ['message' => $event->user];
+        // Log::info('User registered: ' . $user->name);
+        return ['message' => $user];
     }
+ 
 }

@@ -37,7 +37,7 @@ class AdminController extends Controller
             now()->startOfMonth(),
             now()->endOfMonth()  
         ])->get();
-        return view('admin.Dashboard.index', compact('data','orders', 'userCount','price','lastMonthEarnings','lastMonthOrder','SiteChanges'));
+        return view('admin.Dashboard.index', compact('data','orders', 'userCount','price','lastMonthEarnings','lastMonthOrder'));
     }
    
     public function index(){
@@ -69,7 +69,7 @@ class AdminController extends Controller
      event(new SiteChanges($user));
     //  Event::assertDispatched(SiteChanges::class, function ($e) use ($user) {
     //      echo $e->data->id === $user->id;
-    //     //  die();
+    //      die();
     //  });
      return redirect('/furni/login');
     }

@@ -26,9 +26,9 @@ class SiteChanges
     {
         // $this->user = $user;
         $this->message = $user;
-        Log::info('User registered: ' . $user->name);
+        // Log::info('User registered: ' . $user->name);
     
-        // dd('User registered: ' . $user->name); 
+        //  dd('User registered: ' . $user->name); 
        
     }
 
@@ -37,10 +37,10 @@ class SiteChanges
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn(): PrivateChannel
     {
-        return [
-            new PrivateChannel('furni-laravel'),
-        ];
+        return new PrivateChannel('furni-laravel');
+          
+       
     }
 }

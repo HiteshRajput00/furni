@@ -38,17 +38,10 @@ app.component('example-component', ExampleComponent);
 
 app.mount('#app');
 
-import Echo from "laravel-echo"
-// import { io } from "socket.io-client"; // Import socket.io-client if using Socket.io
-
-window.Echo = new Echo({
-    broadcaster: 'pusher', 
-    key: process.env.PUSHER_APP_KEY, // Replace with your Pusher key or other credentials
-    cluster: process.env.PUSHER_APP_CLUSTER, // Replace with your cluster
+import Echo from 'laravel-echo';
+Echo = new Echo({
+    broadcaster: 'pusher',
+    key: "1e7dc136b770ce64c5ed",
+    cluster: "ap2",
     encrypted: false,
-    // wsHost: window.location.hostname, // WebSocket server host (change to your server address)
-    // wsPort: 6001, // WebSocket server port (change to your server port)
-    // disableStats: true, // Disable event statistics
-    // enabledTransports: ['ws', 'wss'], // Enable WebSocket and secure WebSocket
-    // client: io, 
 });
