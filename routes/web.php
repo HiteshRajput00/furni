@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\editProductController;
 use App\Http\Controllers\Admin\SitemetaController;
 use App\Http\Controllers\furnicontroller\ProductController;
 use App\Http\Controllers\furnicontroller\usercontroller;
+use App\Http\Controllers\furnicontroller\WebhookController;
 use App\Http\Controllers\furnicontroller\WishlistController;
 use App\Mail\messagemail;
 use Illuminate\Support\Facades\Route;
@@ -123,6 +124,7 @@ Route::group(['middleware' => 'Auth'], function () {
   Route::post('/paymentprocess',[checkoutcontroller::class,'testpayment']);
   Route::get('/payment-success{id}',[checkoutcontroller::class,'paymentsuccess'])->name('payment-success');
   Route::post('/handle-3d-secure',[checkoutcontroller::class,'requestHandle'])->name('handle-3d-secure');
+  Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////  apply remove  coupon  ///////////////////////////////////////

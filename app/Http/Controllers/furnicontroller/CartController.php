@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Models\Products;
 
 class CartController extends Controller
 {
@@ -109,7 +110,10 @@ class CartController extends Controller
     public function changeCart(Request $request){
         $ID = $request->input('id');
         $cart = Cart::find($ID);
+        $product = Variation::find($cart->variationID);
+        if($product->stock >= $cart->quantity){
         $cart->update(['quantity'=>$cart->quantity+1]);
+    }
         $newqty = $cart->quantity ;
         return response()->json(['data'=>$newqty]);
     }

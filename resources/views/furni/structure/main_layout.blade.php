@@ -15,12 +15,12 @@
     
  
 		<!-- Bootstrap CSS -->
-		<link href="{{ url('/asset/css/bootstrap.min.css') }}" rel="stylesheet">
+		{{-- <link href="{{ url('/asset/css/bootstrap.min.css') }}" rel="stylesheet">
 		<link href="{{ url('/asset/css/tiny-slider.css') }}" rel="stylesheet">
-		<link href="{{ url('/asset/css/style.css') }}" rel="stylesheet">
-        {{-- <link rel="stylesheet" href="https://1834-124-253-82-196.ngrok-free.app/asset/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://1834-124-253-82-196.ngrok-free.app/asset/css/tiny-slider.css">
-<link rel="stylesheet" href="https://1834-124-253-82-196.ngrok-free.app/asset/css/style.css"> --}}
+		<link href="{{ url('/asset/css/style.css') }}" rel="stylesheet"> --}}
+        <link rel="stylesheet" href="https://c18e-27-255-191-127.ngrok-free.app/asset/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://c18e-27-255-191-127.ngrok-free.app/asset/css/tiny-slider.css">
+        <link rel="stylesheet" href="https://c18e-27-255-191-127.ngrok-free.app/asset/css/style.css">
 
         {{-- <link rel="stylesheet" href="{{ asset('/asset/css/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('/asset/css/css/responsive.css') }}"> --}}
@@ -240,12 +240,12 @@
         </div>
     </footer>
     <!-- End Footer Section -->
-    <script src="{{ url('/asset/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ url('/asset/js/bootstrap.bundle.min.js') }}"></script>
  
-    <script src="{{ url('/asset/js/tiny-slider.js') }}"></script>
+    <script src="{{ url('/asset/js/tiny-slider.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- <script src=" https://1834-124-253-82-196.ngrok-free.app/asset/js/tiny-slider.js"></script> 
-    <script src="https://1834-124-253-82-196.ngrok-free.app/asset/js/bootstrap.bundle.min.js"></script> --}}
+    <script src=" https://c18e-27-255-191-127.ngrok-free.app/asset/js/tiny-slider.js"></script> 
+    <script src="https://c18e-27-255-191-127.ngrok-free.app/asset/js/bootstrap.bundle.min.js"></script>
     {{-- <script src="{{ url('/asset/js/custom.js') }}"></script> --}}
 
     </body>

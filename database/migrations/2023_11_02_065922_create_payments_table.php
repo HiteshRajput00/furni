@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('order_id');
-            $table->string('currency');
-            $table->string('total_amount');
-            $table->string('status'); 
+            $table->string('order_id')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('total_amount')->nullable();
+            $table->string('status')->nullable(); 
             $table->timestamps();
         });
     }
