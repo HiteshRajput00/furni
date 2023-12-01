@@ -192,26 +192,26 @@ class checkoutcontroller extends Controller
     public function paymentsuccess($id)
     {
 
-        $order = Order::where('orderNUM', $id)->get();
-        foreach ($order as $o) {
-            $payment = Payment::where('orderNUM', '=', $o->orderNUM)->get();
-            foreach ($payment as $pay) {
-                $pay->update(['status' => 1]);
-            }
-            $o->update(['status' => 1]);
-        }
-        //////////// removing product from  cart ////////////////////////
-        $cart = Cart::where('userID', Auth::user()->id)->get();
-        foreach ($cart as $c) {
-            $product = Variation::find($c->variationID);
-            $stock = $product->stock - $c->quantity;
-            if ($stock == 0) {
-                $product->update(['status' => 0]);
-            } else {
-                $product->update(['stock' => $stock]);
-            }
-            $c->delete();
-        }
+        // $order = Order::where('orderNUM', $id)->get();
+        // foreach ($order as $o) {
+        //     $payment = Payment::where('orderNUM', '=', $o->orderNUM)->get();
+        //     foreach ($payment as $pay) {
+        //         $pay->update(['status' => 1]);
+        //     }
+        //     $o->update(['status' => 1]);
+        // }
+        // //////////// removing product from  cart ////////////////////////
+        // $cart = Cart::where('userID', Auth::user()->id)->get();
+        // foreach ($cart as $c) {
+        //     $product = Variation::find($c->variationID);
+        //     $stock = $product->stock - $c->quantity;
+        //     if ($stock == 0) {
+        //         $product->update(['status' => 0]);
+        //     } else {
+        //         $product->update(['stock' => $stock]);
+        //     }
+        //     $c->delete();
+        // }
         return view('furni.checkout.thankyou');
     }
 }

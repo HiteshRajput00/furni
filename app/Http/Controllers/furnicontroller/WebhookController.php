@@ -4,6 +4,7 @@ namespace App\Http\Controllers\furnicontroller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Payment;
 use App\Models\variation;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
@@ -83,17 +84,12 @@ class WebhookController extends Controller
      */
     protected function handlePaymentIntentSucceeded($paymentIntent)
     {
-        $cart = Cart::where('userID', Auth::user()->id)->get();
-        foreach ($cart as $c) {
-            $product = variation::find($c->variationID);
-            $stock = $product->stock - $c->quantity;
-            if ($stock == 0) {
-                $product->update(['status' => 0]);
-            } else {
-                $product->update(['stock' => $stock]);
-            }
-            $c->delete();
-        }
+     
+      $payment = new Payment();
+      $payment->orderNUM = 'orderNumber';
+      $payment->total_amount = 123456;
+      $payment->status = 1;
+      $payment->save();
     }
 
     /**

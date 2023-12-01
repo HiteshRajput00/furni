@@ -33,7 +33,7 @@
         if (result.error) {
        
         } else {
-            window.location.href = '/payment-success' + id;
+            // window.location.href = '/payment-success' + id;
          
     }});
     
