@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +10,10 @@
 
     <meta name="description" content="" />
     <meta name="keywords" content="bootstrap, bootstrap4" />
+
+    <!-- Add this to the head of your HTML file -->
+{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy4Bier1V5UaaeqJW85BRSprEExlEomfz" crossorigin="anonymous"> --}}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
  
@@ -18,9 +21,9 @@
 		{{-- <link href="{{ url('/asset/css/bootstrap.min.css') }}" rel="stylesheet">
 		<link href="{{ url('/asset/css/tiny-slider.css') }}" rel="stylesheet">
 		<link href="{{ url('/asset/css/style.css') }}" rel="stylesheet"> --}}
-        <link rel="stylesheet" href="https://c18e-27-255-191-127.ngrok-free.app/asset/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://c18e-27-255-191-127.ngrok-free.app/asset/css/tiny-slider.css">
-        <link rel="stylesheet" href="https://c18e-27-255-191-127.ngrok-free.app/asset/css/style.css">
+        <link rel="stylesheet" href="https://ac21-124-253-97-123.ngrok-free.app/asset/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://ac21-124-253-97-123.ngrok-free.app/asset/css/tiny-slider.css">
+        <link rel="stylesheet" href="https://ac21-124-253-97-123.ngrok-free.app/asset/css/style.css">
 
         {{-- <link rel="stylesheet" href="{{ asset('/asset/css/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('/asset/css/css/responsive.css') }}"> --}}
@@ -218,9 +221,7 @@
                 <div class="row pt-4">
                     <div class="col-lg-6">
                         <p class="mb-2 text-center text-lg-start">Copyright &copy;
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>. All Rights Reserved. &mdash; Designed with love by <a
+                           {{ now()->format('Y') }}. All Rights Reserved. &mdash; Designed with love by <a
                                 href="https://untree.co">Untree.co</a> Distributed By <a
                                 hreff="https://themewagon.com">ThemeWagon</a>
                             <!-- License information: https://untree.co/license/ -->
@@ -241,11 +242,11 @@
     </footer>
     <!-- End Footer Section -->
     {{-- <script src="{{ url('/asset/js/bootstrap.bundle.min.js') }}"></script>
- 
-    <script src="{{ url('/asset/js/tiny-slider.js') }}"></script> --}}
+     <script src="{{ url('/asset/js/tiny-slider.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src=" https://c18e-27-255-191-127.ngrok-free.app/asset/js/tiny-slider.js"></script> 
-    <script src="https://c18e-27-255-191-127.ngrok-free.app/asset/js/bootstrap.bundle.min.js"></script>
+
+    <script src=" https://ac21-124-253-97-123.ngrok-free.app/asset/js/tiny-slider.js"></script> 
+    <script src="https://ac21-124-253-97-123.ngrok-free.app/asset/js/bootstrap.bundle.min.js"></script>
     {{-- <script src="{{ url('/asset/js/custom.js') }}"></script> --}}
 
     </body>

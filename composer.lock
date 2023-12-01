@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1c6291928bae308440ef09e8e861463",
+    "content-hash": "196eee001afeed74eab713586c1b201b",
     "packages": [
         {
             "name": "brick/math",
@@ -3775,16 +3775,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v13.2.1",
+            "version": "v13.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "3f39dcd583b5e9ff2b65281034d38c79358a8095"
+                "reference": "ff0a56c75ff50b50ed97c45c02dfaa2dd341c5b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/3f39dcd583b5e9ff2b65281034d38c79358a8095",
-                "reference": "3f39dcd583b5e9ff2b65281034d38c79358a8095",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/ff0a56c75ff50b50ed97c45c02dfaa2dd341c5b1",
+                "reference": "ff0a56c75ff50b50ed97c45c02dfaa2dd341c5b1",
                 "shasum": ""
             },
             "require": {
@@ -3828,9 +3828,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v13.2.1"
+                "source": "https://github.com/stripe/stripe-php/tree/v13.4.0"
             },
-            "time": "2023-11-06T23:24:49+00:00"
+            "time": "2023-11-21T20:08:15+00:00"
         },
         {
             "name": "symfony/console",

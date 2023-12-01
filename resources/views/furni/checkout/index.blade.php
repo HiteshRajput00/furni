@@ -4,8 +4,8 @@
         <div class="container">
 
 
-            <form method="post" id="mainform" action="/paymentprocess">
-                @csrf
+            <form action="/paymentprocess" id="mainform" method="POST" >
+             @csrf
                 <div class="row">
                     <div class="col-md-6 mb-5 mb-md-0">
                         <h2 class="h3 mb-3 text-black">Billing Details</h2>
@@ -374,16 +374,11 @@
                                     <div class="border p-3 mb-5">
                                         <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse"
                                                 href="#collapseCard" role="button" aria-expanded="false"
-                                                aria-controls="collapsepaypal">By Card</a>
+                                                aria-controls="collapseCard">By Card</a>
                                         </h3>
                                         <div class="collapse" id="collapseCard">
                                             <br>
-                                            <div class="form-group">
-                                                <label for="card-element">Card Holder Name</label>
-                                                <input type="text" class="form-control" id="card_holder_name"
-                                                    name="card_holder_name">
-                                            </div>
-                                            <br>
+                                           
                                             <div class="form-group">
 
                                                 <label for="card-element">Card Details</label>
@@ -397,8 +392,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-black btn-lg py-3 btn-block" id="submit-payment"
-                                            type="submit">Place Order</button>
+                                        <button class="btn btn-black btn-lg py-3 btn-block" type="submit" id="submit-payment" >Place Order</button>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -500,5 +495,34 @@
                 }
             });
         });
+
+        ////////////////// session payment /////////////////////////////
+    //     var stripe = Stripe(
+    //         'pk_test_51O7AYgSIRjlSt6h3GKjXiN4vqP0Strd7vltj5qFHdb4eN8URJPGUNPbD00jwI1XiFyoMe50cPWN8lpnIs5AIOgVf002gg6Hlla'
+    //     );
+    //     document.getElementById('submit-payment').addEventListener('click', function () {
+    //         var inputValue = $('#inputtotal').val();
+    //         // const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    //     fetch('/checkout-process', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    //         },
+    //         body: JSON.stringify({
+    //            price : inputValue
+    //         }),
+    //     })
+    //     .then(response => response.json())
+    //     .then(session => {
+    //         return stripe.redirectToCheckout({ sessionId: session.id });
+    //     })
+    //     .then(result => {
+    //         // Handle the result
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
+    // });
     </script>
 @endsection

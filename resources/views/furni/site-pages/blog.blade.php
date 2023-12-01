@@ -13,7 +13,7 @@
                         <div class="post-content-entry">
                             <h3><a href="#">{{ $blog->title }}</a></h3>
                             <div class="meta">
-                                <span>by <a href="#">{{ $blog->name }}</a></span> <span>on <a href="#">{{ $blog->created_at->format('Y-m-d') }}
+                                <span>by <a href="#">{{ $blog->name }}</a></span> <span>on <a href="#">{{ $blog->created_at->format('d M,Y') }}
                                         </a></span>
                             </div>
                         </div>

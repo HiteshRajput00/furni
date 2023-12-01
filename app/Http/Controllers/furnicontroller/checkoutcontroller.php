@@ -171,24 +171,6 @@ class checkoutcontroller extends Controller
                 $order->save();
 
                 ////////////// Payment data ///////////////////////
-                $payment = new Payment();
-                $payment->orderNUM = $orderNumber;
-                $payment->total_amount = $price;
-                $payment->status = 1;
-                $payment->save();
-
-                //////////// removing product from  cart ////////////////////////
-                $cart = Cart::where('userID', Auth::user()->id)->get();
-                foreach ($cart as $c) {
-                    $product = Variation::find($c->variationID);
-                    $stock = $product->stock - $c->quantity;
-                    if ($stock == 0) {
-                        $product->update(['status' => 0]);
-                    } else {
-                        $product->update(['stock' => $stock]);
-                    }
-                    $c->delete();
-                }
 
                 return view('furni.checkout.thankyou');
             } else {

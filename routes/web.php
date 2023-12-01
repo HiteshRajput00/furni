@@ -14,6 +14,7 @@ use App\Http\Controllers\furnicontroller\ProductController;
 use App\Http\Controllers\furnicontroller\usercontroller;
 use App\Http\Controllers\furnicontroller\WebhookController;
 use App\Http\Controllers\furnicontroller\WishlistController;
+use App\Http\Controllers\sessionController;
 use App\Mail\messagemail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -124,7 +125,7 @@ Route::group(['middleware' => 'Auth'], function () {
   Route::post('/paymentprocess',[checkoutcontroller::class,'testpayment']);
   Route::get('/payment-success{id}',[checkoutcontroller::class,'paymentsuccess'])->name('payment-success');
   Route::post('/handle-3d-secure',[checkoutcontroller::class,'requestHandle'])->name('handle-3d-secure');
-  Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
+  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////  apply remove  coupon  ///////////////////////////////////////
@@ -132,6 +133,7 @@ Route::group(['middleware' => 'Auth'], function () {
   Route::post('/removecoupon',[CouponController::class,'removecoupon'])->name('removecoupon');
   /////////////////////////////////////////////////////////////////////////////////////////
 });
+Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
 
 
 ////////////////////////// shop routes   ////////////////////////
@@ -149,10 +151,8 @@ Route::get('/send-test-email', function () {
   return 'Test email sent.';
 });
 //////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
+////// payment by session ////////////////////////////////
+Route::post('/checkout-process',[sessionController::class,'sessionpayment']);
+Route::get('/payment-success',[sessionController::class,'paymentSucess']);
+Route::get('/payment-fail',[sessionController::class,'paymentfail']);
 
