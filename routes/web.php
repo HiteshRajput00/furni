@@ -15,6 +15,7 @@ use App\Http\Controllers\furnicontroller\usercontroller;
 use App\Http\Controllers\furnicontroller\WebhookController;
 use App\Http\Controllers\furnicontroller\WishlistController;
 use App\Http\Controllers\sessionController;
+use App\Http\Controllers\SetLanguage;
 use App\Mail\messagemail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -155,4 +156,9 @@ Route::get('/send-test-email', function () {
 Route::post('/checkout-process',[sessionController::class,'sessionpayment']);
 Route::get('/payment-success',[sessionController::class,'paymentSucess']);
 Route::get('/payment-fail',[sessionController::class,'paymentfail']);
+
+
+// routes/web.php
+Route::get('set-language/{locale}', [SetLanguage::class,'setLanguage'])->name('set.language');
+Route::post('/changecontent',[SetLanguage::class,'change']);
 

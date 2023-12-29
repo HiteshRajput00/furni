@@ -18,12 +18,12 @@
     
  
 		<!-- Bootstrap CSS -->
-		{{-- <link href="{{ url('/asset/css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ url('/asset/css/bootstrap.min.css') }}" rel="stylesheet">
 		<link href="{{ url('/asset/css/tiny-slider.css') }}" rel="stylesheet">
-		<link href="{{ url('/asset/css/style.css') }}" rel="stylesheet"> --}}
-        <link rel="stylesheet" href="https://ac21-124-253-97-123.ngrok-free.app/asset/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://ac21-124-253-97-123.ngrok-free.app/asset/css/tiny-slider.css">
-        <link rel="stylesheet" href="https://ac21-124-253-97-123.ngrok-free.app/asset/css/style.css">
+		<link href="{{ url('/asset/css/style.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://86a8-124-253-64-135.ngrok-free.app/asset/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://86a8-124-253-64-135.ngrok-free.app/asset/css/tiny-slider.css">
+        <link rel="stylesheet" href="https://86a8-124-253-64-135.ngrok-free.app/asset/css/style.css">
 
         {{-- <link rel="stylesheet" href="{{ asset('/asset/css/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('/asset/css/css/responsive.css') }}"> --}}
@@ -51,8 +51,14 @@
 						<li><a class="nav-link" href="/shop">Shop</a></li>
 						<li><a class="nav-link" href="/blog">Blog</a></li>
 						<li><a class="nav-link" href="/contact">Contact us</a></li>
+                        <li>
+                            <a href="{{ route('set.language', ['locale' => 'en']) }}">English</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('set.language', ['locale' => 'es']) }}">Español</a>
+                        </li>
 					</ul>
-                    <form action="/search" class="row g-1">
+                    {{-- <form action="/search" class="row g-1">
                         <div class="col-auto">
                             <input type="text" class="form-control mr-sm-2" name="search" placeholder="search">
                         </div>
@@ -60,7 +66,7 @@
                             <p><button class="btn btn-white-outline"><i style="color: white;" class="fas fa-search"></i></button></p>
                                
                         </div>
-                     </form>
+                     </form> --}}
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 							@if (Auth::user())
 						 <li><a class="nav-link" href="/userprofile"><img src="{{ url('/asset/images/user.svg') }}">   {{ Auth::user()->name }}</a></li>
@@ -105,6 +111,9 @@
     </div>
 </div>
 <!-- End Hero Section -->
+
+
+
 
     @yield('content')
 
@@ -241,12 +250,12 @@
         </div>
     </footer>
     <!-- End Footer Section -->
-    {{-- <script src="{{ url('/asset/js/bootstrap.bundle.min.js') }}"></script>
-     <script src="{{ url('/asset/js/tiny-slider.js') }}"></script> --}}
+    <script src="{{ url('/asset/js/bootstrap.bundle.min.js') }}"></script>
+     <script src="{{ url('/asset/js/tiny-slider.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src=" https://ac21-124-253-97-123.ngrok-free.app/asset/js/tiny-slider.js"></script> 
-    <script src="https://ac21-124-253-97-123.ngrok-free.app/asset/js/bootstrap.bundle.min.js"></script>
+    <script src="https://86a8-124-253-64-135.ngrok-free.app/asset/js/tiny-slider.js"></script> 
+    <script src="https://86a8-124-253-64-135.ngrok-free.app/asset/js/bootstrap.bundle.min.js"></script> 
     {{-- <script src="{{ url('/asset/js/custom.js') }}"></script> --}}
 
     </body>

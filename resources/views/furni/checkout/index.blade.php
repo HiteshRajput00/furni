@@ -365,12 +365,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
-
-
                                     <input type="hidden" id="inputtotal" name="total" value="{{ $total }}">
-
-
                                     <div class="border p-3 mb-5">
                                         <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse"
                                                 href="#collapseCard" role="button" aria-expanded="false"

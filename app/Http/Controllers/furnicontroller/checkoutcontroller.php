@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Variation;
-
+use Illuminate\Support\Facades\Http;
 use Stripe\Webhook;
 
 class checkoutcontroller extends Controller
@@ -20,6 +20,11 @@ class checkoutcontroller extends Controller
     ///////////////////checkout function  ///////////////////////////////
     public function checkout()
     {
+
+        // $response = Http::withBasicAuth(env('STRIPE_SECRET'), '')->get("https://api.stripe.com/v1/payment_intents{pm_1OIWYsSIRjlSt6h320ey4ii6}");
+
+        // $paymentIntent = $response->json();
+        // dd($paymentIntent);
 
         $carts = Cart::where('userID', Auth::user()->id)->get();
         $address = BillingDetails::where('userID', Auth::user()->id)->get();
@@ -47,6 +52,8 @@ class checkoutcontroller extends Controller
     //////////// place  order  with payment //////////////
     public function testpayment(Request $request)
     {
+        dd($request->all());
+        $user = $request->user();
         if ($request->input('Useraddress') !== null) {
             $request->validate([
                 'Useraddress' => 'required',
@@ -126,6 +133,7 @@ class checkoutcontroller extends Controller
         ///////////////// making payment by stripe  /////////////////////
         try {
             $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+            if (!$user->stripe_customer_id) {
             $stripeCustomer = $stripe->customers->create([
                 'name' => $request->fname,
                 'email' => $request->email,
@@ -136,7 +144,7 @@ class checkoutcontroller extends Controller
                 ],
                 'payment_method' => $request->token,
             ]);
-
+        }
             $paymentMethodId = $request->token;
 
             $paymentIntentObject = $stripe->paymentIntents->create([

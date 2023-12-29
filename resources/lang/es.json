@@ -1,0 +1,18 @@
+{
+    "welcome": "Bienvenido a nuestro sitio web",
+    "about": "Sobre nosotros",
+    "contact": "Contáctenos",
+    "greeting": {
+        "morning": "Buenos días",
+        "afternoon": "Buenas tardes",
+        "evening": "Buenas noches"
+    },
+    "placeholders": {
+        "name": "Ingrese su nombre",
+        "email": "Ingrese su correo electrónico"
+    },
+    "buttons": {
+        "submit": "Enviar",
+        "cancel": "Cancelar"
+    }
+}
